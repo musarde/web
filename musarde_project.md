@@ -11,27 +11,50 @@ A mobile-first web app that helps me get more out of museum visits. Two main sur
 1. **Pre-visit:** pick a museum (or aggregate current exhibitions in a city), get a curated route through the galleries with notes on which works to spend time on and why
 2. **In-gallery:** photograph a work or scan a label → get deeper context, related works in the collection, links to similar works elsewhere
 
-Launch coverage: clean-API museums as the indexed substrate (Met + AIC committed, third source TBD). Seattle and SF museums deferred to v1.5 once the core pipeline is proven. Multilingual and cross-city agent features deferred (see Post-v1 roadmap).
+Launch coverage: Met + AIC + Getty as the open-data encyclopedic backbone, plus a manually-catalogued SAM substrate for local field testing.
 
-## Why I'm building it
+## Why I'm building it — and what's gating
 
-Primary goal: enrich my resume during sabbatical. Strong across all three resume variants:
+**Primary goal:** get a job by end of August 2026. Musarde is interview substrate and resume artifact in service of that goal, not the goal itself.
+
+**The plan has two committed phases and one conditional phase:**
+
+- **Weeks 1–6 (committed):** build to Week 6 with resume bullets ready to add. By Sunday Jun 14, ~5 in-progress bullets credible enough for the resume, plus interview-readiness audit complete (architecture defendable cold).
+- **Weeks 7+ (conditional):** continued effort depends on job-search bandwidth. If interviews are moving and consuming calendar, scale back or pause Musarde. If the pipeline is quiet, continue per the original plan toward Phase 2/3 ship and the August NYC trip.
+
+**The Week 6 milestone is the project's only hard commitment.** Everything past it is renegotiable based on what the job search actually needs.
+
+Strong across all three resume variants:
 - **ML/AI:** multimodal (vision + RAG + agent design), real eval work on a defensible domain
-- **Full-Stack/Product:** deployed mobile-first PWA with real users (me, on actual museum visits)
-- **Distributed Systems:** ingestion pipeline across heterogeneous museum sources, embedding pipeline, hybrid retrieval
+- **Full-Stack/Product:** deployed mobile-first PWA with real users (me)
+- **Distributed Systems:** ingestion pipeline across heterogeneous museum sources spanning CSV, REST, Linked Open Data, and manually catalogued substrates
 
 Secondary: I genuinely use this on weekends and on travel.
 
-Resume bullets I'm targeting:
-- Built Musarde, a mobile-first museum companion app indexing 600K+ works across Met, Art Institute of Chicago, and additional clean-API sources, with pluggable adapter architecture supporting CSV bulk dumps and live REST integrations
-- Designed multimodal eval set of 200+ phone photos taken across 5+ museum visits; achieved [X%] top-5 retrieval accuracy with hybrid CLIP + text + LLM re-ranking pipeline
-- Built contemporary art reading companion with comprehension-rubric eval, validated on 5–10 readers; outperforms vanilla LLM-no-RAG baseline by [X] points on held-out works
+## Resume bullets I'm targeting
+
+### v0.6 (in-progress versions, ready by Sunday Jun 14 / Week 6)
+
+These are the bullets that go on the resume regardless of what happens after Week 6. They're written in present-continuous where work is ongoing; numbers are real-as-of-Week-6.
+
+- **Building Musarde, a mobile-first museum companion app**; ingestion pipeline processes 680K+ artworks across The Met, Art Institute of Chicago, and the J. Paul Getty Museum with pluggable adapter architecture spanning CSV bulk dumps, live REST APIs, and Linked Open Data (JSON-LD/SPARQL); fault-tolerant Postgres-backed job queue with retry/DLQ semantics, idempotency, and embedding model versioning.
+- **Built mobile-first PWA with sub-3s end-to-end latency for ML-powered visual search of museum artworks**; SSE-streamed LLM responses for in-gallery context; presigned-URL direct-to-S3 uploads for reliable mobile photo ingestion under spotty WiFi conditions.
+- **Built tool-using planning agent for museum visit routing using raw Claude function-calling API**; defined tool surface (collection search, metadata filter, time budgeting, artist context, related works), iterative replanning loop with max-step and timeout policies, and full agent-trace observability; chose raw API over framework to retain explicit control over loop semantics and termination conditions.
+- **Designing multimodal retrieval eval set across phone photos at the Seattle Art Museum** (manually catalogued substrate of ~100 works with deliberate per-genre distribution); current top-5 retrieval accuracy at [X%] with CLIP + metadata-filter pipeline; methodology specifically designed to stress-test CLIP failure modes on contemporary, conceptual, and Indigenous art.
+- **Built contemporary art reading companion with RAG over curated corpus of museum essays, artist interviews, and open criticism**; designed three-way comprehension-rubric eval (vanilla LLM baseline / single-shot RAG / one-round-iterative RAG) on held-out works; reader study with 5–10 participants planned.
+
+Optional 6th bullet if Week 6 produces a real observability finding:
+- **Instrumented ML inference stack with structured logging tracking p50/p95 latency, cost per query, model version, and quality regression signals**; built cost/latency dashboards revealing [specific finding] that informed [specific optimization].
+
+### v1.0 (post-Week-6 upgrade, conditional on continued effort)
+
+If Phases 2/3 continue, bullets upgrade to past-tense with shipped numbers, hybrid retrieval ablation results, and (if August trip happens) multi-museum eval data.
 
 ## My background context
 
 - Senior SDE / Tech Lead, 12+ years at Amazon
 - Strong on distributed systems, AWS, ML infrastructure (SageMaker, EMR/Spark)
-- Less hands-on experience: vision models, modern Next.js / React 19, mobile PWA patterns, fine-tuning
+- Less hands-on experience: vision models, modern Next.js / React 19, mobile PWA patterns, fine-tuning, agent design
 - Comfortable with agent design conceptually; this is my first real agent-driven product
 
 ## Stack decisions
@@ -41,150 +64,143 @@ Resume bullets I'm targeting:
 - **Vision:** CLIP (OpenAI or open variants via Replicate) for image embeddings
 - **Text embeddings:** text-embedding-3-small
 - **LLM API:** Claude for agent reasoning and annotation; GPT-4o for vision tasks where needed
+- **Agent layer:** raw Claude function-calling API, NOT a framework. Decision logged Week 1.
 - **Cron:** Vercel cron or GitHub Actions for periodic ingestion refresh
 
-Reuse same stack as the bilingual reader — keeps mental overhead low.
+Reuse same stack as the bilingual reader.
 
 ## Verified ingestion sources for v1
 
 **Committed:**
-- **The Met** — CSV dump on GitHub at `metmuseum/openaccess`, ~470K works, CC0, no auth, no rate limits. Plus REST API for richer per-object data including images. Cleanest integration in the museum world.
-- **Art Institute of Chicago** — REST API at `api.artic.edu/api/v1/`, no auth required, ~120K works, CC0, IIIF for images. Also offers nightly JSON data dumps on GitHub at `art-institute-of-chicago/api-data`. Actively maintained.
+- **The Met** (NYC) — CSV dump on GitHub at `metmuseum/openaccess`, ~470K works, CC0. Plus REST API for richer per-object data including images. *Capstone field-test target if August NYC trip happens.*
+- **Art Institute of Chicago** (Chicago) — REST API at `api.artic.edu/api/v1/`, ~120K works, CC0, IIIF for images. Nightly JSON dumps on GitHub.
+- **The J. Paul Getty Museum** (LA) — Linked Open Data via `data.getty.edu`, ~88K open-content images CC0. Linked Art format (JSON-LD/SPARQL). IIIF for images. The most architecturally novel integration.
+- **Seattle Art Museum** — manually catalogued substrate of ~100 works captured during visits. OCR pipeline for label metadata + reference photos for embeddings. Used for local field-test iteration. Sidesteps both the technical bot-protection and legal questions of scraping.
 
-**Third source candidates (decide week 1 after looking at one example record from each):**
-- **Cleveland Museum of Art** — Open Access API + GitHub dump, ~60K works, CC0, IIIF images included. Cleanest "image-bearing third source" option.
-- **Brooklyn Museum** — REST API, encyclopedic with serious contemporary holdings. Need to verify current state of API before committing.
-- **Whitney Museum** — Live API + CSV dump, 17K+ works, 20th–21st c. American focus, CC0. **Caveat:** open-access dataset is metadata-only, no images. Best as a text-retrieval source for the reading companion, not a vision substrate.
-- **MoMA** — CSV dump on GitHub (`MuseumofModernArt/collection`), ~140K works, CC0, metadata-only. Same image caveat as Whitney.
-- **Rijksmuseum bulk download** — ~800K objects with high-res images, CC-BY. Note: legacy REST API is deprecated; new APIs use OAI-PMH and Linked Art (more complex). Bulk download is the simplest path if chosen.
+**v1.5 expansion candidates (post-launch):** Cleveland, Brooklyn, LACMA, Whitney, MoMA, Rijksmuseum, Frye (with permission), expanded SAM coverage.
 
-Decision criterion: pick based on whether the third source is doing the "image-bearing diversity" job (Cleveland, Brooklyn, Rijksmuseum) or the "contemporary text-rich" job for the reading companion (Whitney, MoMA).
-
-**Deferred to v1.5 (scraping pass, after core pipeline is proven):**
-- **Frye Art Museum** — small custom-stack site, scrape feasible, ~700 works estimated. Local Seattle field-test substrate when added.
-- **SAM (Seattle Art Museum)** — uses eMuseum platform; ~600 highlight works publicly exposed (not the full 25K — most of the collection is unpublished). Scrapeable but adds complexity; defer.
-
-**Cut entirely:**
-- **Henry Art Gallery** — would require relationship-based access (email outreach), not on critical path
-- **SFMOMA** — public Collection API has been deprecated/offline for years despite docs claiming "temporarily unavailable"
-- **FAMSF (de Young + Legion)** — no public bulk dump available; would require scraping with no compensating benefit over Met/AIC encyclopedic coverage
+**Cut from v1:** Henry Art Gallery (relationship-based access only), SFMOMA (API offline), FAMSF (no public dump), Portland Art Museum / Vancouver Art Gallery (no public APIs).
 
 ## Scope — what's in v1
 
-- Indexed collections: Met + AIC + one additional source (TBD week 1)
-- Pre-visit route: pick museum + interests → ranked list of works with notes
-- Cross-city exhibition aggregation **primitive**: pluggable source adapters, taste-vector ranking. Single-city scope in v1; full multi-city agent comes in v1.5.
+- Indexed collections: Met + AIC + Getty (~680K open-data works) + SAM (~100 manually catalogued)
+- **Pre-visit route as a tool-using planning agent** (Week 2): tools for collection search, metadata filter, time budgeting, artist context lookup, related works. Multi-step planning loop, full agent-trace observability. Raw Claude function-calling API.
+- Cross-city exhibition aggregation **primitive**: pluggable source adapters, taste-vector ranking. Single-city scope in v1; full multi-city agent in v1.5.
 - In-gallery camera flow: photograph work → context + related works
 - Mobile-first PWA with offline cache for the curated route
-- **Contemporary art reading companion** (week 5, reframed from earlier "hybrid retrieval" plan): plain-English explainer for dense art writing, RAG over a curated corpus of exhibition essays + artist interviews + open criticism. Comprehension-rubric eval on self + 5–10 friends. Strict baseline: must beat vanilla LLM-no-RAG to justify the corpus.
+- **Contemporary art reading companion** (Week 5): plain-English explainer with RAG over curated corpus, light-iterative retrieval pattern, comprehension-rubric eval
 - Just me + 2–3 friends as users
 
 ## Scope — explicitly out of v1
 
 - True gallery wayfinding / floor plans (v2)
-- Multilingual museum label translator (v2 / trip-driven, when a Japan or Korea trip is on the calendar)
-- Cross-city exhibition agent with multi-source aggregation across galleries, fairs, Instagram (v1.5 / post-launch)
-- Seattle museum integration via scraping (v1.5)
+- Multilingual museum label translator (v2 / trip-driven)
+- Cross-city exhibition agent with multi-source aggregation (v1.5)
+- Scraping-based ingestion (deferred to v1.5)
 - Public launch / user accounts at scale
 - Native mobile app
+- Fully agentic multi-hop retrieval for the reading companion
 
-## 8-week build plan (10–12 weeks realistic alongside job applications)
+## Build plan
 
-### Week 1 — Data foundation
-- Postgres + pgvector set up (Supabase or Neon)
-- Generic ingestion adapter pattern with two key schema affordances:
-  - `raw_metadata` JSONB column on objects table — full source-specific record stored verbatim. Escape hatch for fields not modeled in v1.
-  - Separate `texts` table keyed by `(object_id, type, language, source)` for future multilingual / multi-text-type support
-- **Day 1–2:** Met CSV adapter end-to-end (download, parse, normalize, store, generate CLIP embeddings for sample). First win banked.
-- **Day 3–4:** AIC REST adapter, exercises pagination + REST shape. Confirms adapter pattern works across two integration shapes.
-- **Day 5:** 60-minute exercise — pull one example record from each candidate third source (Cleveland, Brooklyn, Whitney, MoMA, Rijksmuseum). Use the field shapes to inform schema design before committing. Decide third source.
-- **Day 6–7:** Implement third source adapter. Generate full embeddings.
-- **Sanity check:** pick a Met work, find nearest neighbors across all three collections. Do they make art-historical sense?
+**Headline shape:** 6 weeks committed (Phases 1–2 partial, Weeks 1–6) ending in resume-bullets-ready and interview-readiness audit. Weeks 7+ conditional on job-search bandwidth.
 
-### Week 2 — Pre-visit planning + cross-city primitive
-- Standard flow: museum + interests → curated route
-- Build the cross-city aggregation **primitive** with pluggable source adapters. Even though v1 only ranks across the museums in the indexed collection, design the abstraction so the v1.5 agent expansion drops in cleanly.
-- First agent: reason about user interests + collection metadata + time budget
+### Week 1 — Data foundation: Met + AIC (May 4–10)
+- Postgres + pgvector. Generic ingestion adapter pattern with `raw_metadata` JSONB escape hatch and separate `texts` table.
+- Met CSV adapter (Day 1–2). AIC REST adapter (Day 3–4). Polish + full embeddings (Day 5–6).
+- **Day 7:** decisions-log entry on raw tool-use API vs. framework. Sketch Week 2 tool surface on paper.
 
-### Week 3 — In-gallery experience + first field test
-- Mobile-first PWA, offline cache for curated route
-- "I'm here" view: next stop, current work, notes, related works
-- Streaming LLM responses (latency matters in galleries)
-- **Field test:** when in-gallery flow works, take it to whichever museum is convenient (likely opportunistic during travel given v1 has no Seattle museums). Notebook for failures. Triage and fix top 3 next morning.
+### Week 2 — Tool-using planning agent (May 11–17)
+- Tools: `search_collection`, `filter_by_metadata`, `estimate_time_budget`, `lookup_artist_context`, `find_related_works`
+- Loop: max 5–8 steps, hard timeout, full trace logging
+- **Decisions-log entries (target 4–5):** tool surface granularity, termination policy, history management, failure handling, observability schema
+- SF travel May 15–20: real Week 2 deadline is Thu May 14 EOD
 
-### Week 4 — Vision feature + extended field test
-- Camera input → CLIP embedding → nearest-neighbor in indexed collection
-- Fallback for works not in index
-- Latency target: <3 seconds end-to-end
-- **Field test:** photograph 30–40 works at a museum where coverage exists. This is the eval set. Without Seattle museums in v1, this likely happens during a trip.
+### Week 3 — In-gallery PWA + first PWA field test (May 18–24)
+- Mobile-first PWA, offline cache, "I'm here" view, streaming LLM responses
+- Field test at Seattle museum using Met or AIC as test substrate (PWA UX doesn't need SAM ingestion)
 
-### Week 5 — Contemporary art reading companion
-**Reframed from "hybrid retrieval for contemporary works" — same underlying retrieval engineering, much sharper resume artifact.**
-- Build a plain-English explainer for dense art writing (artist statements, exhibition essays, press releases). Outputs: explanation of what the work/show is about, art-historical references, similar artists/movements, questions to ask yourself when looking.
-- RAG over a curated corpus of exhibition essays. Clean sources only: museum-published essays, Art21 transcripts, BOMB and BrooklynRail interviews, artist gallery-page writing. Skip paywalled and ToS-restricted sources (Artforum, Frieze, e-flux).
-- **Eval is the senior-grade artifact.** Comprehension test format: read explanation → answer 3 questions about the work → score. Held-out works whose criticism is NOT in the corpus, to measure generalization rather than memorization. Baseline: vanilla LLM with the artwork image and no RAG. If RAG'd version doesn't beat baseline, the corpus isn't earning its keep.
+### Week 4 — Vision feature + SAM manual catalog + first vision field test (May 25–31)
+- Camera input → CLIP embedding → nearest-neighbor. Latency target <3s end-to-end.
+- **SAM manual catalog protocol (build first, before the visit):** OCR-label-to-JSON pipeline, schema for SAM-manual records, eval-set capture protocol.
+- **Field test (full Saturday at SAM):** catalogue ~100 works with deliberate distribution. Same visit captures 30–40 phone-photo eval queries.
+- Phase 1 boundary review.
 
-### Week 6 — Personalization + taste profile
-*(Multilingual moved to v2.)*
-- Taste profile from saved/liked works: bag-of-CLIP-embeddings + bag-of-text-embeddings of artist statements engaged with
-- Cross-museum recommendations within indexed collections
-- Design taste-profile object deliberately — it's shared infrastructure for the v1.5 cross-city agent
+### Week 5 — Reading companion (Jun 1–7)
+- RAG over curated corpus, light-iterative retrieval (single-shot + one conditional follow-up round)
+- Three-way comprehension eval design: vanilla LLM no-RAG / single-shot RAG / iterative RAG, on held-out works
 
-### Week 7 — Iteration on hardest cases
-- Test edge cases surfaced by week 4 vision field test, particularly contemporary works
-- Hybrid retrieval improvements: CLIP + text retrieval over wall text/essays + LLM re-ranking
-- Eval: hybrid vs. CLIP-only on contemporary subset
-- Where senior-grade engineering shows up — naïve approach works on a Vermeer, fails on a Trisha Donnelly
+### Week 6 — Getty integration + minimal taste profile + interview-readiness checkpoint (Jun 8–14)
+**The committed milestone.**
 
-### Week 8 — Polish, deploy, write up
-- UI pass (designer friend if available)
-- Performance: lighthouse scores, image lazy loading, embedding caching
-- Public blog post: architecture + one specific hard problem solved. Recommend writing about either the multimodal eval or the reading companion's comprehension-rubric eval — both are distinctive.
-- Demo video shot during an actual museum visit
-- Resume bullets finalized
+- **Day 1–3:** Getty Linked Open Data adapter. Parse JSON-LD documents, normalize Linked Art concepts. CLIP embeddings on ~88K open-content images.
+- **Day 4:** Schema audit post-Getty.
+- **Day 5:** Taste profile (minimal — bag-of-embeddings with mean aggregation, stub for v1.5 deepening).
+- **Day 6–7:** **Interview-readiness audit.** Whiteboard architecture from memory. Defend top 5 architectural decisions in 2 min each. Confirm resume bullets are ready to add.
 
-## Post-v1 roadmap
+**Sunday Jun 14 check-in:** the **continue / scale-back / pause decision** for Musarde based on current job-search status. See accountability plan for the framework.
+
+### Weeks 7+ — Conditional
+
+**If continuing at full pace:**
+- Week 7: Hybrid retrieval + second SAM field test
+- Week 8: Phase 2 ship — polish, deploy, blog post, demo video, resume bullets v1.0
+- Weeks 9–12: Phase 3 — A/B retrieval, hybrid retrieval deepening, continuous eval, observability
+- Week 14 (early August): NYC capstone field test at the Met (~100 phone-photo eval queries, validate hybrid retrieval in the wild, bullet 3 upgraded to multi-museum framing)
+- Weeks 15–16: Phase 4 wrap or interview-prep weeks
+
+**If scaling back (a few hours per week, on-call mode):**
+- Iterate locally on what shipped through Week 6
+- Use Musarde as personal-use product on weekends
+- Keep one interview-mock per week using the Week 6 substrate
+- No new feature work; resume bullets stay at v0.6
+
+**If pausing:**
+- Week 6 bullets are on the resume regardless
+- Interview substrate is the Week 6 audit material
+- Project resumes when job search lands
+
+## Post-v1 roadmap (whenever v1 ships)
 
 **v1.5 (4–6 weeks, post-launch):**
-- **Cross-city exhibition agent** with multi-source aggregation: museum APIs + gallery sites (ArtRabbit, See Saw) + e-flux announcements. Real itinerary planner with scheduling, opening-hours awareness, walking distances. Maps to 2026 hiring on agentic systems.
-- **Seattle museum integration** via scraping: Frye (small, low-risk), SAM eMuseum (~600 highlights, predictable patterns). Build politeness primitives, robots.txt compliance, JSON-LD-first parsing, response caching. Local field-test substrate.
+- Cross-city exhibition agent with multi-source aggregation
+- Source expansion via permission/scraping
+- SAM manual catalog deepening
 
 **v2 (trip-driven):**
-- **Multilingual label translator** (Japanese/Korean) — focused 2–3 week sub-project when a Japan or Korea trip is on the calendar. OCR (vertical Japanese is non-trivial), vision-style recognition, RAG over Japanese/Korean art history. Don't build until there's a real trip and a real test set.
+- Multilingual label translator (Japanese/Korean) — when a Japan or Korea trip is on the calendar
 
 ## Known risks
 
-- Week 1 ingestion always takes longer than expected, even with clean APIs. Schema decisions on day 1 ripple through the rest of the project. The `raw_metadata` JSONB escape hatch is the most important affordance — it means "I designed for the wrong fields" is always a SQL migration away, not a re-ingest.
-- **Museum API status changes faster than expected.** SFMOMA went offline; Rijksmuseum's legacy API was deprecated; SAM has no API; FAMSF has no public dump. Verify each candidate source is actually accessible before committing to it. Don't build on assumed-working integrations.
-- Week 4 vision work has highest variance. CLIP underperforms on conceptual / installation work. Plan 1–2 days of experimentation before committing to architecture.
-- Week 5 reading companion's eval is the resume-grade artifact and easy to do badly. Baseline comparison with vanilla LLM is non-negotiable. Held-out works are non-negotiable.
-- Field testing pushed out: with no Seattle museums in v1, opportunistic field tests during travel become the primary feedback loop. Plan trips accordingly or accept the trade.
+- Week 1 ingestion always takes longer than expected. Schema decisions on day 1 ripple through.
+- **Museum API status changes.** Verify each source before committing.
+- **Week 2 agent loop has highest design risk.** Tool surface is most of the engineering.
+- **Week 4 vision work has highest variance.** CLIP underperforms on conceptual work.
+- **Week 4 SAM manual catalog is fatiguing.** Pre-build OCR pipeline before the visit.
+- **Week 6 Getty Linked Open Data is the most architecturally novel adapter.** Budget 3 days; don't be surprised if it's 4.
+- Week 5 reading companion eval is the resume-grade artifact and easy to do badly.
+- **Job search vs. project-effort drift.** The biggest risk after Week 6 is that project work feels productive and crowds out interview prep, applications, and outreach. The accountability plan's mock-interview-cadence requirement exists specifically to prevent this.
+- **Week 6 over-investment risk.** Getting too attached to Phase 2 ship goals can produce slip into Week 7+ even when interviews are picking up. The continue/scale-back/pause decision at Week 6 must be honest, not aspirational.
 
 ## How I want Claude to help
 
-- **Architecture decisions:** before I commit to data model, retrieval architecture, agent structure, etc., help me think through alternatives. Push back when my approach has issues.
-- **Vision/multimodal:** this is my weakest area. Be more explanatory here than elsewhere. Flag when there's a standard practice I'm missing.
-- **Scraping/ingestion strategy:** help me think through ethical and rate-limit considerations for each museum source.
-- **Eval design:** the multimodal eval and the reading companion's comprehension eval are the senior-grade artifacts. Push hard on whether evals are rigorous and fair.
-- **Code reviews:** senior pair-programming energy, not basics.
-- **Resume framing:** help me write bullets that are specific and credible.
-- **Verify museum API status before committing.** Don't trust your training data on which APIs exist; the landscape shifts.
+- **Architecture decisions:** push back when my approach has issues
+- **Vision/multimodal:** weakest area, be explanatory
+- **Agent design:** also weak, push hard on tool surface and loop semantics
+- **Linked Open Data parsing:** new for me, be explanatory
+- **Eval design:** push hard on rigor and fairness
+- **Code reviews:** senior pair-programming energy
+- **Resume framing:** specific and credible, including in-progress framing
+- **Verify museum API status before committing.** Don't trust training data.
 
 ## Build log convention
 
-Date-stamped notes per work session in `/build-log/YYYY-MM-DD.md`. Each entry:
-- What I worked on
-- What worked
-- What broke / surprised me
-- Open questions
-- Tomorrow's first task
-
-After each museum field test, longer entry with photo log, failure cases, and triage.
+Date-stamped notes in `/build-log/YYYY-MM-DD.md`. Each entry: what I worked on, what worked, what broke / surprised me, open questions, tomorrow's first task. Longer entries after museum field tests.
 
 ## Cross-project note
 
-Bilingual reader project is the parallel work stream. Same tech stack. The reader's annotation infrastructure may plug into Musarde's v2 multilingual feature when that comes. Don't merge codebases; do reuse mental models.
+Bilingual reader project is parallel work stream. Same stack. Reader's annotation infrastructure may plug into Musarde's v2 multilingual feature.
 
 ## Status
 
-Named, scaffolded, ready to build. Domain registered (musarde.app), GitHub org created (github.com/musarde), Vercel project provisioned. Target start: Mon May 4 (Week 1). Target ship: 8 weeks focused, 10–12 weeks realistic with job search overhead.
+Named, scaffolded, ready to build. Domain registered, GitHub org created, Vercel project provisioned. Target start: Mon May 4 (Week 1). **Committed milestone:** Sunday Jun 14 (Week 6) — resume bullets ready, interview-readiness audit complete, continue/scale-back/pause decision made. Subsequent timeline is conditional on job-search status at that point.

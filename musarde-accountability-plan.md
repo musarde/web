@@ -1,247 +1,245 @@
 # Accountability Plan
 
-Cadence and self-review structure for the 14–16 week phased build of Musarde. **Now layered with explicit interview-prep deliverables (Option A from the system-design pivot).** The project still proceeds toward the resume-artifact and personal-use goals, but interview readiness is a parallel first-class track, not an afterthought.
+Cadence and self-review structure for the Musarde build, with the priority frame **layered explicitly: job by end of August 2026 is the primary goal; Musarde is interview substrate and resume artifact in service of that goal.** The plan has two committed phases and one conditional phase.
 
 Lives at the repo root so it stays in view; revisit at each Sunday check-in.
 
-## Goal stack (in priority order, since they sometimes pull against each other)
+## Goal stack (priority order, since they pull against each other)
 
-1. **Build interview substrate.** Real architectural decisions made and defensible. By week 6, can whiteboard the system from memory and walk through trade-offs cold.
-2. **Ship resume artifact.** Phase boundaries are independent shipping points. By week 6, at least two strong resume bullets are immediately addable.
-3. **Build the personal-use product.** I want to use this on weekends and on travel.
+1. **Get a job by end of August 2026.** Interview prep, applications, outreach, mock interviews. This wins every conflict.
+2. **Build interview substrate by Week 6 (Sunday Jun 14).** Real architectural decisions made and defensible. Resume bullets ready to add. By Week 6, can whiteboard the system from memory and walk through trade-offs cold.
+3. **Ship resume artifact through Phase 2/3 (conditional).** Continue toward Week 8 ship and August NYC trip *if* job-search bandwidth allows. Otherwise scale back or pause.
+4. **Build the personal-use product.** I want to use this on weekends and on travel.
 
-When 1 and 2 conflict (e.g., a feature is great for the product but architecturally uninteresting), 1 wins. When 2 and 3 conflict (a feature is great for me personally but doesn't strengthen the resume), pick deliberately rather than drifting.
+When 1 and 2 conflict (a project hour vs. an application hour), 1 wins. When 2 and 3 conflict at Week 6, 2 already won — the bullets are on the resume regardless. When 3 and 4 conflict, pick deliberately rather than drifting.
 
 ## Target dates
 
 - **Week 0 (setup):** Wed Apr 29 – Sun May 3
 - **Week 1 starts:** Mon May 4
 - **Phase 1 ends (foundation):** Sun May 31
-- **Week 6 interview-readiness checkpoint:** Sun Jun 14
-- **Phase 2 ends (multimodal eval shipped):** Sun Jun 28
-- **Phase 3 ends (senior ML-systems story):** Sun Jul 26
-- **Phase 4 ends (cross-city agent, optional):** Sun Aug 23
-- **Decision points:**
-  - Week 4 Sunday (May 31): is interview-prep ROI still high? (See "Continue/stop decision" below.)
-  - Week 6 Sunday (Jun 14): interview-readiness checkpoint. Can I defend this project cold in an interview?
-  - Week 12 Sunday (Jul 26): is phase 4 worth the calendar time, or is it diminishing returns vs. interview reps?
+- **🔑 Week 6 ship-or-pause checkpoint:** Sun Jun 14 — **the only hard milestone.**
+- **Conditional Phase 2 ends:** Sun Jun 28 (Week 8)
+- **Conditional Phase 3 ends:** Sun Jul 26 (Week 12)
+- **Conditional NYC capstone:** Aug 3–9 (Week 14) or Aug 10–16 (Week 15)
+- **Conditional Phase 4 ends:** Sun Aug 23 (Week 16)
 
 ## Travel calendar
 
 ### May 15–20 (Fri–Wed): San Francisco — BTS concert
 
-Spans end of Week 2 and start of Week 3 (Phase 1, weeks 1–4). Realistic availability: ~8–12 work hours across the 6 days vs. ~30 in a normal week. Net loss: roughly 3–4 working days, ~half a week.
+Spans end of Week 2 / start of Week 3. ~8–12 work hours across 6 days vs. ~30 in a normal week. Net loss: ~3–4 working days.
 
-**Effect on Phase 1 timeline:** Phase 1 ends nominally Sun May 31. With the SF trip eating most of week 3, Phase 1's polish gets compressed into week 4. Phase 1 remains achievable but tight.
+**Effect on Phase 1 timeline:** Phase 1 ends Sun May 31. With SF eating most of week 3, polish compresses into week 4. Tight but achievable.
 
-**Effect on Week 2 deadline:** treat **Thu May 14 EOD** as the real Week 2 deadline. Whatever isn't done by then is Week 3 work.
+**Effect on Week 2 deadline:** Thu May 14 EOD is the real Week 2 deadline. Sunday May 17 check-in moves to Thu May 14 evening.
 
-**Effect on the Sunday May 17 check-in:** do it **Thu May 14 evening** instead. Set Week 3's primary deliverable before flying, not after landing.
+### August 3–9 or Aug 10–16: NYC capstone trip (conditional)
 
-**Effect on Week 3:** effectively starts Wed May 21. The Week 3 deliverable (mobile PWA in-gallery flow) likely slides into the start of week 4.
-
-### Decision point — Wed May 13 (Week 2 mid-week pulse)
-
-**Updated framing:** Earlier version of this plan considered SF museums as a possible field-test opportunity. With the project rescoped to clean-integration museums only (Met + AIC + 3rd source), SF museums are NOT in the index. A field test in SF would only test cross-collection nearest-neighbor on works that happen to have stylistic matches in indexed collections — interesting but not central.
-
-**Revised decision at May 13:** Is the in-gallery PWA testable by Thu May 14? If yes and time permits, do an opportunistic walk-through at SFMOMA or de Young — partial coverage is fine for a smoke test. If no, let the trip be the trip. **The field test that matters happens in week 4 or week 7 at a museum where coverage is real.**
+**Only happens if Week 6 ship-or-pause decision is "continue."** If continuing, book by mid-July (Week 11) for reasonable flight prices. If scaling back or pausing, the trip becomes either a personal vacation that opportunistically captures eval data, or doesn't happen as project work at all.
 
 ## Daily rhythm
 
-- **Morning (~4–5 focused hours):** project work. End each session with build-log entry including "tomorrow's first task."
-- **Afternoon split:** job applications + interview prep. Interview prep is no longer the residual; it's explicit calendar time.
-- **End of project session:** 15-minute decisions-log update. Even on days with no new architectural choice, write "no new decisions today" — that itself is data.
+- **Morning (~4–5 focused hours):** project work through Week 6. After Week 6, allocation depends on the ship-or-pause decision.
+- **Afternoon split:** job applications + interview prep. After Week 6, this is likely the larger share.
+- **End of project session:** 15-minute decisions-log update.
 
-### Interview-prep weekly minimums (non-skippable)
+### Interview-prep weekly minimums (non-skippable, every week including post-Week-6)
 
-These are floor commitments, not nice-to-haves. If a week skips any of them, the Sunday check-in flags it.
+These are floor commitments. If a week skips any, the Sunday check-in flags it.
 
-- **One mock interview per week.** Either with a friend role-playing, paid mock (Hello Interview, interviewing.io), or self-recorded with the project as substrate ("Tell me about a system you've built recently"). The point is real-time articulation under pressure.
-- **One architecture-whiteboard practice per week.** Stand at a whiteboard or tablet, draw the current state of the system from memory in 10 minutes, talk through it out loud as if to an interviewer. Notice what you can't draw cleanly — that's what to think about this week.
-- **One hellointerview deep-dive per week.** Pick a key technology you've integrated this week (Redis, SSE, S3, pgvector) and read the corresponding hellointerview deep-dive. Goal: vocabulary alignment with what interviewers expect.
+- **One mock interview per week.** Friend, paid (Hello Interview, interviewing.io), or self-recorded with the project as substrate.
+- **One architecture-whiteboard practice per week.** Draw current system state from memory in 10 min, talk through it out loud.
+- **One hellointerview deep-dive per week.** Pick a key technology integrated this week.
+
+After Week 6, these minimums *increase* if the ship-or-pause decision was scale-back or pause. The point of the framework is more interview prep, not less, when project bandwidth shrinks.
 
 ### No mid-task context switching
 
-If a tricky bug runs past lunch, finish the bug; push job apps to evening. If that pattern repeats more than twice in a week, accept that the 14–16 week timeline skews longer.
+If a tricky bug runs past lunch, finish the bug; push job apps to evening. If that pattern repeats more than twice in a week, accept the timeline skews longer.
 
 ## Decisions log — tracked artifact
 
-A running document at `/build-log/decisions.md`. Every real architectural choice gets an entry. Format:
+A running document at `/build-log/decisions.md`. Every architectural choice gets an entry:
 
 ```
 ## YYYY-MM-DD: [Decision title]
 
 **Context:** What problem was I solving?
-**Considered:** Alternative A, alternative B, alternative C.
+**Considered:** Alternatives.
 **Picked:** X
-**Why:** [The case for X over the alternatives, including trade-offs.]
-**Would revisit if:** [What would change my mind.]
-**Interview talking-point version:** [The 30-second version of this story.]
+**Why:** [Trade-offs.]
+**Would revisit if:** [What changes my mind.]
+**Interview talking-point version:** [30-second version.]
 ```
 
-Every Sunday check-in asks: "What got added to the decisions log this week?" If a week generates zero decisions-log entries, it's a weak interview-prep week even if a lot of code was written.
+Every Sunday: "What got added to the decisions log this week?" Zero entries is a flag.
 
-Already-anticipated entries from the project brief (start the log with these on day 1, fill in details as you build):
+Anticipated entries to start with:
 - Postgres + pgvector over DynamoDB + dedicated vector DB
 - Postgres SKIP LOCKED queue over Redis Streams or SQS
 - In-process LRU cache over Redis for single-instance deploy
 - SSE over WebSockets for streaming LLM responses
-- Postgres FTS over Elasticsearch for the corpus size
+- Postgres FTS over Elasticsearch
 - S3 + presigned URLs over API-server-mediated uploads
-- Redis for rate limiting only (deliberately scoped use)
+- Raw Claude tool-use API over LangGraph or similar agent framework
 - CLIP + text-embedding-3 architecture choice
-- Hybrid retrieval pipeline shape (filter → vector → rerank)
+- Hybrid retrieval pipeline shape
+- Linked Open Data parsing approach (full JSON-LD library vs. nested-JSON)
 
 ## Mid-week pulse — Wednesdays, 5 minutes
 
-Two questions:
+1. *Am I going to hit this week's primary deliverable by Sunday?* If no, decide Wednesday whether to cut scope or extend timeline.
+2. *Am I going to hit this week's interview-prep minimums?* If no, schedule them now.
+3. *Are job applications stalling because project work is bleeding into afternoons?* If yes for two consecutive weeks, the priority stack is failing — re-plan.
 
-1. *Am I going to hit this week's primary deliverable by Sunday?* If no, decide Wednesday whether to cut scope or extend timeline. Letting a slip drift to Sunday costs the whole week.
-2. *Am I going to hit this week's interview-prep minimums?* (Mock interview, whiteboard practice, deep-dive read.) If no, schedule them now.
+## Sunday check-in — ~45 minutes
 
-## Sunday check-in — ~45 minutes (longer than before)
-
-Use the updated template at `build-log/sunday-checkin-template.md`. Save as `build-log/sunday-YYYY-MM-DD.md`.
-
-Time has grown because interview-readiness questions are added. The structure now spans both project progress and interview-prep progress.
+Use template at `build-log/sunday-checkin-template.md`. Save as `build-log/sunday-YYYY-MM-DD.md`.
 
 ## Critical-week flags
 
-Extra time budgeted at these Sunday check-ins. Don't skip the audits.
-
 ### Week 1 (Sun May 10) — Schema review
 
-The `raw_metadata` JSONB escape hatch protects against wrong field choices, but the `texts` table shape is harder to migrate later. Spend 60 minutes asking: *would I regret this schema in Week 5 when the reading companion corpus arrives, or in Week 10 when hybrid retrieval lands?* Adjust now, not then.
+The `raw_metadata` JSONB escape hatch protects against wrong field choices, but the `texts` table shape is harder to migrate later. Spend 60 minutes asking: *would I regret this schema in Week 5 reading-companion or Week 6 Getty integration?* Adjust now.
 
-### Week 4 (Sun May 31) — Phase 1 boundary + continue/stop decision
+### Week 4 (Sun May 31) — Phase 1 boundary
 
 Two audits:
-- **Vision performance audit.** After the field-test eval set is captured, measure top-5 retrieval accuracy honestly. If it's below ~60%, plan Week 7 hybrid retrieval work aggressively.
-- **Continue/stop decision.** This is the first real "is interview prep still earning ROI?" check. By end of week 4, I should have two strong resume bullets ready. If I do, and the marginal week-5 work is still architecturally rich (Redis, observability, reading companion), continue. If the next phase is mostly polish, that's a signal interview-prep value is plateauing.
+- **Vision performance audit.** After SAM eval set is captured, measure top-5 honestly.
+- **Mid-cycle check.** Is the project on track to have ready bullets by Week 6? If not, what scope must be cut?
 
-### Week 6 (Sun Jun 14) — Interview-readiness checkpoint
+### 🔑 Week 6 (Sun Jun 14) — Ship-or-pause checkpoint
 
-**This is the new most-important checkpoint in the plan.** The whole point of the project-as-interview-prep approach is that by week 6 I should be ready to walk into a system-design interview cold and use this project as the substrate. Audit:
+**The single most important milestone in the plan.** This decision is binding for at least the next 2 weeks.
 
+**Project-side audit:**
 - Can I whiteboard the full architecture from memory in 10 minutes?
-- Can I name the top 5 architectural decisions and defend each in 2 minutes?
-- For each connected technology (Postgres, pgvector, S3, presigned URLs, SSE, Redis, in-process LRU), can I state the business requirement and why I picked this tool over alternatives?
-- What did mock interviews surface that I still can't answer well? Block time week 7 to fix the worst gaps.
-- **Are at least two of the resume bullets below ready to add to the resume today?** (See "Resume-bullet readiness by week 6" below.)
+- Top 5 architectural decisions defended in 2 min each?
+- Each integrated technology — business requirement and tool rationale?
+- **Are at least 5 resume bullets ready to add to the resume today?** (See "Resume-bullet readiness" below.)
+- What did mock interviews surface that I still can't answer well?
 
-If the answers are mostly no, week 7 is for catching up on interview-prep, not pushing forward on features.
+**Job-search-side audit:**
+- Job applications submitted in the past 2 weeks: count.
+- Phone screens scheduled: count.
+- Onsite interviews scheduled or recently completed: count.
+- Pipeline trend: building, flat, or stalling?
 
-### Week 5 or 6 — deliberate stress test
+**The ship-or-pause framework:**
 
-One of these weeks, plan a "break something" exercise that forces a real redesign. Candidates:
-- Run embedding pipeline against a corrupted-image batch — what's the failure mode? How does idempotency hold up?
-- Load-test pgvector at 10x current data size with synthetic vectors — where does latency degrade?
-- Simulate Vercel function timeout mid-LLM-stream — does SSE recover gracefully?
-- Run the ingestion adapter against a deliberately malformed source record — does the JSONB escape hatch save you?
+**CONTINUE at full pace** if:
+- Pipeline is flat or quiet (few interviews scheduled)
+- Phase 2 work (Week 7 hybrid retrieval, Week 8 ship) would meaningfully strengthen interview substrate
+- August NYC trip is realistically book-able and would produce useful eval data
+- I have genuine capacity for ~25 project hours/week without crowding job-search effort
 
-Pick one. Document the failure, the diagnosis, and the fix. **This becomes one of the strongest interview stories in the project**, because synthetic stress tests with real diagnoses are rare in personal projects.
+**SCALE BACK to on-call mode (5–8 hours/week)** if:
+- Pipeline is moderate (interviews scheduled, applications converting)
+- The marginal week of project work is incremental, not transformative
+- Job-search effort needs more bandwidth but doesn't need 100% of it
+- I want to keep using the app as a personal product without expanding it
 
-### Week 12 (Sun Jul 26) — Phase 3 boundary + scope question
+**PAUSE entirely** if:
+- Pipeline is hot (multiple onsites in flight, offers expected)
+- Interview prep needs the morning blocks too
+- Resume bullets at v0.6 are doing the job they need to do
 
-By here, the senior ML-systems story is complete. Honest assessment: is phase 4 (cross-city agent) earning more ROI than the same time spent on intensive interview reps with the existing project as substrate? Either is defensible. Decide consciously.
+The decision must be honest. Project work feels productive; job-search work feels uncomfortable. The discomfort is the point. If it's hard to choose pause or scale-back when the data says I should, that itself is a flag.
 
-## Resume-bullet readiness by week 6
+### Week 5 or 6 — deliberate stress test (if continuing)
 
-The point of layering interview prep with the build is that real bullets are ready early, even if more bullets ship later. By end of Week 6, these should be on the resume:
+One of these weeks, if continuing, plan a "break something" exercise:
+- Run embedding pipeline against corrupted-image batch
+- Load-test pgvector at 10x with synthetic vectors
+- Simulate Vercel function timeout mid-LLM-stream
+- Run ingestion adapter against malformed source record
 
-### Bullet 1 — Distributed ingestion pipeline (ready end of week 4)
+Pick one. Document failure, diagnosis, fix. **Becomes one of the strongest interview stories in the project.**
 
-> Built distributed ingestion pipeline processing 600K+ artworks across The Met, Art Institute of Chicago, and [3rd source] with batched ML inference (CLIP image embeddings + text-embedding-3), fault-tolerant Postgres-backed job queue using SKIP LOCKED with retry/DLQ semantics, idempotency, and embedding model versioning supporting zero-downtime model swaps.
+### Week 12 (Sun Jul 26) — Phase 3 boundary + Phase 4 decision (only if continuing)
 
-Data needed by Week 6: actual artwork count ingested, actual ingestion runtime, actual retry/failure counts.
+By here, the senior ML-systems story is complete (if Phase 3 happened). Honest assessment: is Phase 4 (cross-city agent) earning more ROI than the same time on intensive interview reps? Either is defensible.
 
-### Bullet 2 — Mobile PWA + ML-powered visual search (ready end of week 4)
+## Resume-bullet readiness
 
-> Built mobile-first PWA with sub-3s end-to-end latency for ML-powered visual search of museum artworks; SSE-streamed LLM responses for in-gallery context; presigned-URL direct-to-S3 uploads with multipart resumable uploads for reliable mobile photo ingestion under spotty WiFi conditions.
+By Sunday Jun 14 (Week 6), these bullets should be on the resume regardless of what comes next.
 
-Data needed by Week 6: measured p50/p95 end-to-end latency, working demo (video or live).
+### v0.6 set (the Week 6 commitment)
 
-### Bullet 3 — Multimodal eval design (data ready by Week 6 from Week 4 + Week 7 field tests)
+| Bullet | Status | Data needed by Week 6 |
+|---|---|---|
+| 1 — Ingestion pipeline (~680K works across CSV, REST, Linked Open Data) | Built end of Week 6 | Actual ingested counts, runtime, retry/failure counts |
+| 2 — Mobile PWA + ML-powered visual search | Built end of Week 4 | Measured p50/p95 latency, working demo |
+| 3 — Multimodal eval at SAM (in-progress framing) | Designed end of Week 4, refined Week 6 | Real top-5 accuracy from ~40 SAM photos, breakdown by genre |
+| 4 — ML observability *(optional bullet)* | Conditional on Week 6 dashboard producing real finding | One specific finding worth quoting |
+| 5 — Tool-using planning agent | Built end of Week 2, refined through Week 6 | Tool surface, loop semantics, observability schema documented |
+| 6 — Reading companion + comprehension eval (in-progress framing) | Designed end of Week 5, reader study planned | Eval methodology, baseline comparison, planned reader study |
 
-> Designed multimodal retrieval eval across [N] phone photos taken at [M] museum visits; measured top-5 retrieval accuracy at [X]% with CLIP + metadata-filter pipeline; held-out test set covers [Y] artists not in the indexed metadata.
+### v1.0 set (post-Week 6, only if continuing)
 
-Data needed by Week 6: at least 30–50 photos from a real field test. The full 200+ photo eval set lands later, but a credible bullet exists with smaller N.
+These are upgrades, not Week 6 requirements:
+- Bullet 3 absorbs hybrid retrieval results (Week 7) and potentially Met data (Week 14)
+- New bullet for hybrid retrieval ablation (Week 7)
+- New bullet for A/B retrieval infrastructure (Week 9)
+- New bullet for continuous eval harness (Week 11)
 
-### Bullet 4 — ML observability stack (ready end of week 6)
+### Honesty test for in-progress bullets
 
-> Instrumented ML inference stack with structured logging tracking p50/p95 latency, cost per query, model version, and quality regression signals across [N] queries during development; built cost/latency dashboards revealing [specific finding, e.g., "30% of LLM cost was on the explainer path"] that informed [specific optimization].
+For each Week 6 bullet ask:
+- Is every number in this bullet a real measurement I made?
+- Is every system in this bullet actually built and runnable?
+- Could I demo the system in front of an interviewer right now?
+- Am I using "Building" / "Designing" honestly, or as a hedge for "barely started"?
 
-Data needed by Week 6: real measurements, at least one specific finding from the dashboards.
+If any answer is no, the bullet isn't ready. Cut or downgrade.
 
-### What's NOT ready by Week 6 (and that's OK)
-
-- A/B retrieval infrastructure (Week 9)
-- Hybrid retrieval (vector + lexical + rerank) (Week 10)
-- Continuous eval harness (Week 11)
-- Reading companion comprehension eval results (Week 6 designs the eval; results need readers and time)
-- Cross-city agent / PostGIS (Phase 4)
-- CDN edge cache layer (Week 9)
-
-These are Phase 2/3/4 bullets. Don't try to claim them at Week 6.
+Museum visits this week: **N**. Running total: **N**. (Target: 2+ by Week 6 — first SAM visit in Week 4 plus possibly second in Week 7 if continuing.)
 
 ## Mock interview cadence
 
-Weekly, non-skippable. Use the project as substrate.
+Weekly, non-skippable. Project as substrate.
 
 **Format options (rotate):**
-- "Tell me about a system you've built recently and walk me through the architecture." (Most common opener; this is the one to nail.)
-- "Design a system to do [X]" where X is intentionally similar to but not identical to the project (e.g., "design a similar-image search for an e-commerce site"). Forces you to abstract from the specific to the general.
-- "Walk me through how you'd scale your project to 10M users." Tests scale-thinking and the "what I'd reach for at scale" answers from the decisions log.
+- "Tell me about a system you've built recently and walk me through the architecture." (Most common opener; nail this.)
+- "Design a system to do [X]" where X is similar but not identical (e.g., "design similar-image search for an e-commerce site").
+- "Walk me through how you'd scale your project to 10M users."
 
 **After each mock, log in `build-log/mock-interview-YYYY-MM-DD.md`:**
-- Who interviewed (or that it was self-recorded)
+- Who interviewed (or self-recorded)
 - The question/prompt
 - What I answered well
 - What I fumbled or couldn't answer
 - The thing to think about this week to fix the gap
 
-**Triage:** if the same gap shows up two mocks in a row, that's a Sunday-check-in flag — block project time to address it.
+If the same gap shows up two mocks in a row → Sunday-check-in flag → block project time to address it.
 
-## Resume-bullet data tracking
-
-Every Sunday, ask whether this week generated data that fills the placeholders in the target bullets. If a week generates none, ask why.
-
-| Bullet | Data needed | Generated by |
-|---|---|---|
-| 1 — Ingestion pipeline (600K+ works) | Ingestion counts, adapter coverage, retry/DLQ event counts | Phase 1 (weeks 1–4) |
-| 2 — Mobile PWA / vision feature | p50/p95 latency measurements, working demo | Weeks 3–4 |
-| 3 — Multimodal eval | Field-test photo log + annotated eval results | Week 4 first field test, Week 7 extended |
-| 4 — ML observability | Real query volume in logs, cost/latency dashboards, specific findings | Weeks 5–6 |
-| 5 — Hybrid retrieval (later bullet) | Hybrid vs. vector-only eval comparison | Week 10 |
-| 6 — A/B retrieval infra (later bullet) | Strategies tested, regression catches | Weeks 9–11 |
-| 7 — Reading companion (later bullet) | Comprehension scores from 5–10 readers on held-out works | Week 6 design, Week 11+ results |
-
-Track museum visits as a first-class metric in each Sunday check-in. Target: 3+ visits by Week 6, 5+ by Week 12.
-
-## Known risks (review at each Sunday check-in)
+## Known risks
 
 - Week 1 ingestion always takes longer than expected.
-- Museum API status changes faster than expected — verify before committing.
+- Museum API status changes faster than expected.
 - Week 4 vision work has highest variance.
-- Week 5+ reading companion eval is easy to do badly — baseline + held-out works are non-negotiable.
-- Field testing depends on travel calendar.
-- **Operational complexity grows over phases.** Phase 1 has one stateful service. Phase 3 has Postgres + Redis + S3 + CDN. Watch for ops thrash.
-- **(New) Interview-prep avoidance via project work.** Building feels productive; mock interviews feel uncomfortable. The plan is failing if mock interviews keep getting skipped while project work fills the time.
+- Week 5+ reading companion eval is easy to do badly.
+- Week 6 Getty Linked Open Data integration is the most architecturally novel adapter.
+- **Operational complexity grows over phases** (if continuing past Week 6).
+- **Interview-prep avoidance via project work.** Building feels productive; mock interviews feel uncomfortable. The plan is failing if mocks keep getting skipped while project time fills.
+- **Week 6 over-investment.** Getting attached to Phase 2 ship goals can cause slip into Week 7+ even when the honest call is scale-back or pause. The ship-or-pause decision must reflect job-search reality, not aspiration.
+- **Long-timeline drift if continuing.** By Week 14 you'd be 3.5 months in. Risk: momentum decay through Phase 3 makes the trip a "demo what's done" event rather than a real test.
 
 ## When the plan is failing
 
 Signals to stop and re-plan rather than push harder:
-- Two consecutive Sundays of "partial" or "missed" on the primary deliverable.
-- A week that generated zero decisions-log entries when it should have.
-- A week that skipped the mock interview for any reason other than illness or the SF trip.
-- Job applications stalling because project bleeds into afternoons more than twice a week.
-- Same gap surfaces in two consecutive mock interviews without focused work to address it.
-- A risk on the list above has materialized and not been re-planned around.
+- Two consecutive Sundays of "partial" or "missed" on the primary deliverable
+- A week with zero decisions-log entries when there should have been some
+- A week that skipped the mock interview for any reason other than illness or pre-scheduled travel
+- Job applications stalling because project bleeds into afternoons more than twice a week
+- Same gap surfaces in two consecutive mock interviews without focused work
+- Week 6 ship-or-pause decision being deferred ("I'll decide in Week 7") rather than made
 
 ## Cross-reference
 
 Project brief at root: master plan for what's being built.
-This file: how I keep myself accountable to building it.
+This file: how I keep myself accountable.
 `build-log/decisions.md`: running architectural decisions log (interview substrate).
 `build-log/sunday-YYYY-MM-DD.md`: weekly check-ins.
 `build-log/mock-interview-YYYY-MM-DD.md`: mock interview reflections.
