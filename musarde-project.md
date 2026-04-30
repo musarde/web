@@ -37,7 +37,7 @@ Secondary: I genuinely use this on weekends and on travel.
 
 These are the bullets that go on the resume regardless of what happens after Week 6. They're written in present-continuous where work is ongoing; numbers are real-as-of-Week-6.
 
-- **Building Musarde, a mobile-first museum companion app**; ingestion pipeline processes 680K+ artworks across The Met, Art Institute of Chicago, and the J. Paul Getty Museum with pluggable adapter architecture spanning CSV bulk dumps, live REST APIs, and Linked Open Data (JSON-LD/SPARQL); fault-tolerant Postgres-backed job queue with retry/DLQ semantics, idempotency, and embedding model versioning.
+- **Building Musarde, a mobile-first museum companion app**; data integration layer for 680K+ artworks across The Met, Art Institute of Chicago, and the J. Paul Getty Museum, with pluggable adapter pattern spanning three structurally different source paradigms (CSV bulk dumps, live REST APIs, Linked Open Data via JSON-LD/SPARQL); idempotent upserts on natural keys, embedding model versioning, and re-runnable one-shot loader design driven by the slow-moving update cadence of museum collection data (months, not days).
 - **Built mobile-first PWA with sub-3s end-to-end latency for ML-powered visual search of museum artworks**; SSE-streamed LLM responses for in-gallery context; presigned-URL direct-to-S3 uploads for reliable mobile photo ingestion under spotty WiFi conditions.
 - **Built tool-using planning agent for museum visit routing using raw Claude function-calling API**; defined tool surface (collection search, metadata filter, time budgeting, artist context, related works), iterative replanning loop with max-step and timeout policies, and full agent-trace observability; chose raw API over framework to retain explicit control over loop semantics and termination conditions.
 - **Designing multimodal retrieval eval set across phone photos at the Seattle Art Museum** (manually catalogued substrate of ~100 works with deliberate per-genre distribution); current top-5 retrieval accuracy at [X%] with CLIP + metadata-filter pipeline; methodology specifically designed to stress-test CLIP failure modes on contemporary, conceptual, and Indigenous art.
@@ -61,11 +61,11 @@ If Phases 2/3 continue, bullets upgrade to past-tense with shipped numbers, hybr
 
 - **Frontend:** Next.js (App Router), Tailwind, deployed on Vercel as PWA
 - **Database:** Postgres on Supabase or Neon, with pgvector for embeddings
-- **Vision:** CLIP (OpenAI or open variants via Replicate) for image embeddings
-- **Text embeddings:** text-embedding-3-small
-- **LLM API:** Claude for agent reasoning and annotation; GPT-4o for vision tasks where needed
+- **Vision:** CLIP-family for image embeddings — OpenCLIP ViT-L/14 (LAION-2B) as default; SigLIP under consideration as a more deliberate pick (Week 1 decision). Bulk embedding runs locally or on Modal; Replicate reserved for incremental deltas only.
+- **Text embeddings:** TBD pending Week 1 three-way bake-off (text-embedding-3-small, Voyage-3, candidate OSS option) on a small held-out retrieval set. The eval scaffolding doubles as substrate for the Week 5 reading-companion comprehension eval.
+- **LLM API:** Claude for agent reasoning, annotation, and vision tasks. Single provider for v1; revisit only if a specific task surfaces a real performance gap.
 - **Agent layer:** raw Claude function-calling API, NOT a framework. Decision logged Week 1.
-- **Cron:** Vercel cron or GitHub Actions for periodic ingestion refresh
+- **Loader runtime:** on-demand re-runnable Python script. No cron, no queue. Collection data updates on the order of months, so quarterly hand-triggered re-runs are operationally honest. Decision logged Week 0.
 
 Reuse same stack as the bilingual reader.
 
@@ -180,6 +180,7 @@ Reuse same stack as the bilingual reader.
 - **Week 6 Getty Linked Open Data is the most architecturally novel adapter.** Budget 3 days; don't be surprised if it's 4.
 - Week 5 reading companion eval is the resume-grade artifact and easy to do badly.
 - **Job search vs. project-effort drift.** The biggest risk after Week 6 is that project work feels productive and crowds out interview prep, applications, and outreach. The accountability plan's mock-interview-cadence requirement exists specifically to prevent this.
+- **Resume-driven over-engineering.** The symmetric failure mode to the one above: adding infrastructure (queues, schedulers, A/B harnesses, retry layers) because it sounds good on a resume rather than because the app demands it. Senior interviewers — Bar Raisers especially — ding over-engineering harder than under-engineering. The honest filter for any piece of infrastructure: name a concrete thing the app does this quarter that requires it. If the answer is "it would be impressive," cut it. Both this risk and the one above are the project warping around something other than the app's actual needs.
 - **Week 6 over-investment risk.** Getting too attached to Phase 2 ship goals can produce slip into Week 7+ even when interviews are picking up. The continue/scale-back/pause decision at Week 6 must be honest, not aspirational.
 
 ## How I want Claude to help

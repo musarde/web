@@ -6,10 +6,10 @@ camera/RAG flow. Mobile-first PWA on Vercel; Next.js + Postgres/pgvector +
 CLIP + Claude/GPT-4o.
 
 The repo currently holds planning docs only. Code lands starting Mon May 4
-(Week 1). See `musarde_project.md` for the full brief.
+(Week 1). See `musarde-project.md` for the full brief.
 
 ## Primary docs (read these before editing anything)
-- `musarde_project.md` — master project brief, scope, 8-week plan
+- `musarde-project.md` — master project brief, scope, 8-week plan
 - `accountability-plan.md` — cadence, check-ins, interview-prep track,
   resume-bullet readiness table
 - `build-log/sunday-checkin-template.md` — copy this each Sunday into
@@ -17,7 +17,7 @@ The repo currently holds planning docs only. Code lands starting Mon May 4
 - `build-log/decisions.md` — running architectural decisions log
 
 ## Conventions when updating planning docs
-- The two planning docs (`musarde_project.md`, `accountability-plan.md`)
+- The two planning docs (`musarde-project.md`, `accountability-plan.md`)
   are interlinked. If you change scope in the project brief, check whether
   the accountability plan's phase boundaries, target dates, or
   resume-bullet table still match. Flag mismatches; don't silently fix one

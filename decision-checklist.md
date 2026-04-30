@@ -8,9 +8,11 @@ The plan has two committed phases (Weeks 1–6) and one conditional phase (Weeks
 
 ## Week 0 — Setup (Wed Apr 29 – Sun May 3)
 
-- [ ] **Postgres host: Supabase or Neon?** Decide before Week 1 Day 1.
+- [ ] **Postgres host: Supabase or Neon?** Decide before Week 1 Day 1. Note: vector + text-embedding storage at v1 scale is meaningfully larger than the free tiers on either service, so this is partly a sizing/cost decision, not just a feature one.
 - [ ] Commit cadence and branch strategy
-- [ ] Set up `/build-log/decisions.md` with template
+- [x] Set up `/build-log/decisions.md` with template
+- [x] Log Week 0 decisions: (1) one-shot loader over queue infrastructure, (2) decision filter — workload over resume
+- [ ] Confirm stack updates carried into Week 1: GPT-4o cut, cron removed, text-embedding model TBD pending Week 1 bake-off, vision defaults to OpenCLIP ViT-L/14 with SigLIP under consideration
 
 ---
 
@@ -186,6 +188,8 @@ Once made, leave alone unless something concrete breaks.
 - SAM as manually-catalogued (not scraped) substrate
 - Reading companion uses light-iterative retrieval
 - NYC as the capstone field-test target (if August trip happens)
+- **One-shot re-runnable loader over queued/scheduled ingestion** (Week 0 entry)
+- **Decision filter: name a concrete workload need or cut the infrastructure** (Week 0 entry — governing principle)
 - **Week 6 as the only hard milestone; Weeks 7+ are conditional**
 
 If one starts feeling wrong, write a decisions-log entry on *why* before deciding to change.

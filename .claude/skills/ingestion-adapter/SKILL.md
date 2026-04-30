@@ -9,7 +9,7 @@ Scaffold a new museum-source ingestion adapter that conforms to the Musarde pipe
 
 ## Before scaffolding
 
-1. **Read `musarde_project.md`** for the canonical schema and pipeline shape — particularly the data-model section that defines `artworks`, `texts`, and the job queue. The `raw_metadata` JSONB column and the `texts` table shape are called out as critical Week 1 decisions; preserve them.
+1. **Read `musarde-project.md`** for the canonical schema and pipeline shape — particularly the data-model section that defines `artworks`, `texts`, and the job queue. The `raw_metadata` JSONB column and the `texts` table shape are called out as critical Week 1 decisions; preserve them.
 2. **Look for existing adapters.** Check `src/ingestion/adapters/` (or whatever directory holds them) for `met.py`/`met.ts` and `aic.py`/`aic.ts`. If they exist, treat them as canonical examples and mirror their structure exactly — naming, file layout, helper imports, logging shape. If they don't exist yet, you are establishing the pattern; flag that to the user.
 3. **Confirm the source has a clean API.** v1 is "clean APIs only" per the brief. If the source requires scraping, stop and ask whether to defer to v1.5/v2 instead of scaffolding.
 4. **Check `build-log/decisions.md`** for any logged decisions about retrieval, embedding, or queue shape — the adapter must match what the decisions log specifies, not what feels reasonable in isolation.

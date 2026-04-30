@@ -113,7 +113,7 @@ Running list of terms that are new-ish for me in this project. The point isn't a
 
 **Embedding model versioning** — Storing `embedding_model_version` alongside every vector so that, when the model changes, you can re-embed incrementally and serve a consistent index. Week 1 design.
 
-**Batched ML inference** — Running embedding generation in batches with checkpointing, idempotency, retry/DLQ. The pattern that turns "generate CLIP embeddings" from a script into a real pipeline. Closest analogue to the Alexa-recommendation-platform shape.
+**Batched ML inference** — Running embedding generation in batches with checkpointing and idempotency. In a higher-throughput context this is where retry/DLQ semantics live; in Musarde the loader runs as a re-runnable script, so checkpointing + idempotent upserts cover the same ground without queue infrastructure. The pattern's closest distributed-systems analogue is the Alexa-recommendation-platform shape, scaled down to the workload.
 
 **Content-addressed cache** — Cache keyed by hash-of-inputs (model, prompt, params). Embeddings are deterministic given input + version, so they cache trivially. LLM responses cache the same way at temperature 0 with a stable prompt. 10x dev cost reduction.
 
@@ -149,11 +149,11 @@ Running list of terms that are new-ish for me in this project. The point isn't a
 
 **Presigned S3 URL** — Short-lived URL that lets a client upload directly to S3 without going through the API server. Used for in-gallery photo upload.
 
-**SKIP LOCKED** — Postgres clause that lets multiple workers dequeue jobs without blocking each other. The basis of the Postgres-backed embedding job queue.
+**SKIP LOCKED** — Postgres clause that lets multiple workers dequeue jobs without blocking each other. *Not used in Musarde — see DLQ note above. Pinned for vocabulary and the "considered and rejected" interview frame.*
 
 **Postgres FTS** — Postgres's built-in full-text search. The lexical half of hybrid retrieval; chosen over Elasticsearch for operational simplicity at this scale.
 
-**DLQ (Dead Letter Queue)** — Where jobs go after exhausting retries. Standard ingestion-pipeline fault tolerance.
+**DLQ (Dead Letter Queue)** — Where jobs go after exhausting retries. Standard ingestion-pipeline fault tolerance. *Not used in Musarde — collection data is slow-moving enough that the loader is a re-runnable one-shot script rather than a queued workload (decisions log, Week 0). Pinned here for vocabulary completeness and the interview talking-point about choosing not to build queue infrastructure.*
 
 ---
 

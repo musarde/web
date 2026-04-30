@@ -75,17 +75,21 @@ A running document at `/build-log/decisions.md`. Every architectural choice gets
 
 Every Sunday: "What got added to the decisions log this week?" Zero entries is a flag.
 
-Anticipated entries to start with:
+Already logged (Week 0):
+- One-shot loader over queue infrastructure
+- Decision filter: workload over resume
+
+Anticipated future entries:
 - Postgres + pgvector over DynamoDB + dedicated vector DB
-- Postgres SKIP LOCKED queue over Redis Streams or SQS
 - In-process LRU cache over Redis for single-instance deploy
 - SSE over WebSockets for streaming LLM responses
 - Postgres FTS over Elasticsearch
 - S3 + presigned URLs over API-server-mediated uploads
-- Raw Claude tool-use API over LangGraph or similar agent framework
-- CLIP + text-embedding-3 architecture choice
-- Hybrid retrieval pipeline shape
-- Linked Open Data parsing approach (full JSON-LD library vs. nested-JSON)
+- Raw Claude tool-use API over LangGraph or similar agent framework (Week 1)
+- Text embedding model bake-off result (Week 1)
+- CLIP variant choice — OpenCLIP vs SigLIP (Week 1)
+- Hybrid retrieval pipeline shape (Week 7 if continuing)
+- Linked Open Data parsing approach — full JSON-LD library vs. nested-JSON (Week 6)
 
 ## Mid-week pulse — Wednesdays, 5 minutes
 
@@ -223,6 +227,7 @@ If the same gap shows up two mocks in a row → Sunday-check-in flag → block p
 - Week 6 Getty Linked Open Data integration is the most architecturally novel adapter.
 - **Operational complexity grows over phases** (if continuing past Week 6).
 - **Interview-prep avoidance via project work.** Building feels productive; mock interviews feel uncomfortable. The plan is failing if mocks keep getting skipped while project time fills.
+- **Resume-driven over-engineering.** The symmetric failure mode to the one above: adding infrastructure (queues, schedulers, A/B harnesses, retry layers) because it sounds good on a resume rather than because the app demands it. Filter: name a concrete thing the app does this quarter that requires this piece of infrastructure. If the answer is "it would be impressive," cut it. Both risks are the project warping around something other than the app's actual workload.
 - **Week 6 over-investment.** Getting attached to Phase 2 ship goals can cause slip into Week 7+ even when the honest call is scale-back or pause. The ship-or-pause decision must reflect job-search reality, not aspiration.
 - **Long-timeline drift if continuing.** By Week 14 you'd be 3.5 months in. Risk: momentum decay through Phase 3 makes the trip a "demo what's done" event rather than a real test.
 
