@@ -7,3 +7,8 @@ node_modules/
 .DS_Store
 /coverage
 /build
+
+# Claude Code: ignore ephemeral and user-local state, keep shared config
+.claude/worktrees/
+.claude/settings.local.json
+.claude/projects/
