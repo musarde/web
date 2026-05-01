@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Musarde</title>
+  <meta name="description" content="A mobile-first museum companion app. Currently being built.">
+  <meta name="theme-color" content="#f6f1e6">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f6f1e6;
+      --ink: #1c1814;
+      --ink-muted: #6b6357;
+      --accent: #8b6f47;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Fraunces', Georgia, serif;
+      font-weight: 400;
+      line-height: 1.6;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      padding: 2rem 1.75rem;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      max-width: 32rem;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-size: clamp(3.75rem, 16vw, 6.5rem);
+      font-weight: 300;
+      letter-spacing: -0.045em;
+      line-height: 0.95;
+      margin-bottom: 2rem;
+    }
+
+    .etymology {
+      font-size: 1.0625rem;
+      color: var(--ink-muted);
+      margin-bottom: 2.5rem;
+      font-weight: 300;
+      max-width: 22rem;
+    }
+
+    .etymology em {
+      color: var(--ink);
+      font-style: italic;
+      font-weight: 400;
+    }
+
+    .status {
+      font-size: 1rem;
+      color: var(--ink);
+      max-width: 22rem;
+      font-weight: 400;
+    }
+
+    .rule {
+      width: 2.5rem;
+      height: 1px;
+      background: var(--ink);
+      opacity: 0.35;
+      margin: 1.75rem 0;
+    }
+
+    footer {
+      margin-top: 3.5rem;
+      font-size: 0.875rem;
+      color: var(--ink-muted);
+      letter-spacing: 0.01em;
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid currentColor;
+      padding-bottom: 1px;
+      transition: color 0.18s ease;
+    }
+
+    footer a:hover {
+      color: var(--ink);
+    }
+
+    @media (min-width: 720px) {
+      body {
+        padding: 4rem;
+      }
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #1a1714;
+        --ink: #f0ebde;
+        --ink-muted: #8a8275;
+        --accent: #c8a06e;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>musarde</h1>
+    <p class="etymology">
+      <em>musarder</em>, v. — to dawdle pleasurably, to muse.
+    </p>
+    <div class="rule"></div>
+    <p class="status">
+      A mobile-first museum companion app. Currently being built.
+    </p>
+    <footer>
+      <a href="https://github.com/musarde/web">github.com/musarde/web</a>
+    </footer>
+  </main>
+</body>
+</html>
