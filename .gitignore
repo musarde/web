@@ -9,6 +9,14 @@ node_modules/
 /coverage
 /build
 
+# Python artifacts (loader scripts, smoke tests)
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
 # Claude Code: ignore ephemeral and user-local state, keep shared config
 .claude/worktrees/
 .claude/settings.local.json
