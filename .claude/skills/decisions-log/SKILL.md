@@ -1,18 +1,20 @@
 ---
 name: decisions-log
-description: Draft entries for build-log/decisions.md in the Musarde architectural decision log format (Context / Considered / Picked / Why / Would-revisit-if / Interview-talking-point). Use this skill when the user explicitly asks to "log a decision," "add an ADR," "write this up for the decisions log," or when the user has just resolved an architectural tradeoff in conversation (e.g., picked Postgres pgvector over a dedicated vector DB, chose SKIP LOCKED over a separate queue service, decided on an embedding model, settled a schema question) and is ready to capture it. Do not trigger on routine code edits, bug fixes, or implementation details — only on choices that compare named alternatives and shape system architecture.
+description: Draft entries for ../build-log/decisions.md in the Musarde architectural decision log format (Context / Considered / Picked / Why / Would-revisit-if / Interview-talking-point). Use this skill when the user explicitly asks to "log a decision," "add an ADR," "write this up for the decisions log," or when the user has just resolved an architectural tradeoff in conversation (e.g., picked Postgres pgvector over a dedicated vector DB, decided on an embedding model, settled a schema question, picked one ingestion shape over another) and is ready to capture it. Do not trigger on routine code edits, bug fixes, or implementation details — only on choices that compare named alternatives and shape system architecture.
 ---
 
 # decisions-log
 
-Draft a new entry for `build-log/decisions.md`. The decisions log is interview substrate, not a changelog — every entry has to be defensible cold in 2 minutes to a system-design interviewer. Skip flavor text. Match the existing voice (terse, opinionated, no hedge words like "we feel" or "it seems").
+Draft a new entry for `../build-log/decisions.md`. The decisions log is interview substrate, not a changelog — every entry has to be defensible cold in 2 minutes to a system-design interviewer. Skip flavor text. Match the existing voice (terse, opinionated, no hedge words like "we feel" or "it seems").
 
 ## Before drafting
 
-1. **Read `build-log/decisions.md`.** Check whether the decision is already logged or is on the "anticipated entries" list at the bottom. If it's anticipated, you are turning a placeholder into a real entry — remove it from the anticipated list as part of the edit.
-2. **Read the most recent ~5 commits** (`git log --oneline -20`) to ground the Context section in what just shipped or got built. The decision usually corresponds to code that exists or is about to exist.
-3. **Skim `accountability-plan.md` §"Decisions log — tracked artifact"** if the format below feels ambiguous — the canonical spec lives there.
-4. **Confirm the choice is actually architectural.** Library version bumps, lint rules, file naming — not architectural. Schema shape, vendor selection, queue/cache design, embedding model, retrieval pipeline shape, agent framework — architectural. If unclear, ask the user before drafting.
+1. **Read `../build-log/decisions.md`.** Check whether the decision is already logged or is on the "anticipated entries" list at the bottom. If it's anticipated, you are turning a placeholder into a real entry — remove it from the anticipated list as part of the edit.
+2. **Check `../build-log/decision-checklist.md`.** This file surfaces decisions expected by week. If the current decision matches one on the checklist for the active or recent week, note that connection in the entry's framing — the checklist is the "what's coming up" view, the decisions log is the "what got resolved" view.
+3. **Read the most recent ~5 commits** (`git log --oneline -20`) to ground the Context section in what just shipped or got built. The decision usually corresponds to code that exists or is about to exist.
+4. **Skim `../build-log/accountability-plan.md` §"Decisions log — tracked artifact"** if the format below feels ambiguous — the canonical spec lives there.
+5. **Skim `../build-log/glossary.md`** so the entry uses the project's preferred terms (e.g., the names this project uses for sources, schemas, retrieval shapes). Drift between the entry and the glossary is a signal you're inventing terminology.
+6. **Confirm the choice is actually architectural.** Library version bumps, lint rules, file naming — not architectural. Schema shape, vendor selection, ingestion shape, embedding model, retrieval pipeline shape, agent framework — architectural. If unclear, ask the user before drafting.
 
 ## Format
 
@@ -44,4 +46,4 @@ The repo's existing planning docs are direct, slightly blunt, no hedging. Match 
 
 ## After drafting
 
-Show the user the drafted entry inline before writing to the file. Ask whether the **Would revisit if** trigger is falsifiable enough — that's the most common weak spot. After confirming, append to `build-log/decisions.md` and remove any matching item from the "Anticipated entries" list at the bottom.
+Show the user the drafted entry inline before writing to the file. Ask whether the **Would revisit if** trigger is falsifiable enough — that's the most common weak spot. After confirming, append to `../build-log/decisions.md` and remove any matching item from the "Anticipated entries" list at the bottom. If the decision corresponded to an item on `../build-log/decision-checklist.md`, mention that to the user so they can update the checklist too.

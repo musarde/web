@@ -1,6 +1,6 @@
 ---
 name: sunday-checkin
-description: Populate the weekly Sunday check-in entry for the Musarde build log by aggregating the week's commits, new entries in build-log/decisions.md, daily build-log files, and current resume-bullet status against the sunday-checkin-template structure. Use this skill when the user says "sunday checkin," "weekly review," "fill in the sunday checkin," "weekly buildlog," or asks for a status summary of the past week's Musarde work. The output is saved to build-log/sunday-YYYY-MM-DD.md and covers what shipped, what slipped, decisions logged, mock-interview status, the continue/scale-back/pause read for the week, and next week's first task. Trigger only for Musarde weekly-review requests — not for general status updates or other repos.
+description: Populate the weekly Sunday check-in entry for the Musarde build log by aggregating the week's commits, new entries in ../build-log/decisions.md, daily build-log files, and current resume-bullet status against the sunday-checkin-template structure. Use this skill when the user says "sunday checkin," "weekly review," "fill in the sunday checkin," "weekly buildlog," or asks for a status summary of the past week's Musarde work. The output is saved to ../build-log/sunday-YYYY-MM-DD.md and covers what shipped, what slipped, decisions logged, mock-interview status, the continue/scale-back/pause read for the week, and next week's first task. Trigger only for Musarde weekly-review requests — not for general status updates or other repos.
 ---
 
 # sunday-checkin
@@ -11,37 +11,42 @@ Generate a draft Sunday check-in for the Musarde build log. The check-in is for 
 
 Run these in parallel before writing anything. Don't ask the user to feed you the data — pull it yourself.
 
-1. **The week's commits.**
+The build-log is a sibling private repo at `../build-log/`, not in the code repo. Use `git -C ../build-log <cmd>` for git operations against it; use plain `git <cmd>` from the working directory for code-repo commits.
+
+1. **The week's commits in the code repo.**
    ```
    git log --since="7 days ago" --pretty=format:"%h %ad %s" --date=short
    ```
    Group by day. Note any day with zero commits.
 
-2. **New `build-log/decisions.md` entries from this week.**
+2. **New `../build-log/decisions.md` entries from this week.**
    ```
-   git log --since="7 days ago" -p -- build-log/decisions.md
+   git -C ../build-log log --since="7 days ago" -p -- decisions.md
    ```
-   Extract the headings of any entries added in the last 7 days. Zero entries this week is itself a signal — call it out explicitly.
+   Extract the headings of any entries added in the last 7 days. Zero entries this week is itself a signal — call it out explicitly. Cross-check against `../build-log/decision-checklist.md`: if the checklist anticipated decisions for this week and none were logged, flag the gap.
 
 3. **Daily build-log files from the week.**
-   List and read `build-log/YYYY-MM-DD.md` for each day in the past 7 days that exists. Missing days are also signal.
+   List and read `../build-log/YYYY-MM-DD.md` for each day in the past 7 days that exists. Missing days are also signal.
 
 4. **Last week's "Next week's primary deliverable" and "Monday's first task."**
-   Find the previous `build-log/sunday-*.md` file. Read sections 12 and 14. The current week's check-in audits against last week's commitments — without them you're writing in a vacuum.
+   Find the previous `../build-log/sunday-*.md` file. Read sections 12 and 14. The current week's check-in audits against last week's commitments — without them you're writing in a vacuum.
 
 5. **Current resume-bullet status.**
-   Read `accountability-plan.md` §"Resume-bullet readiness." Note which v0.6 bullets are claimed-ready vs. in-progress. Cross-reference against what the commits and daily logs actually demonstrate.
+   Read `../build-log/accountability-plan.md` §"Resume-bullet readiness." Note which v0.6 bullets are claimed-ready vs. in-progress. Cross-reference against what the commits and daily logs actually demonstrate.
 
 6. **Mock-interview file from this week.**
-   Look for `build-log/mock-interview-YYYY-MM-DD.md` dated within the past 7 days. If absent, the section 5 answer is "skipped" — note it.
+   Look for `../build-log/mock-interview-YYYY-MM-DD.md` dated within the past 7 days. If absent, the section 5 answer is "skipped" — note it.
+
+7. **Glossary check.**
+   Skim `../build-log/glossary.md` so the draft uses the project's preferred terms (sources, schemas, retrieval shapes). Drift from the glossary is a quiet signal you're inventing terminology.
 
 ## Output
 
-Copy `build-log/sunday-checkin-template.md` to `build-log/sunday-YYYY-MM-DD.md` (today's date), then fill in what you can from the gathered inputs. **Leave fields you can't determine empty** rather than guessing — the user will fill them in.
+Copy `../build-log/sunday-checkin-template.md` to `../build-log/sunday-YYYY-MM-DD.md` (today's date), then fill in what you can from the gathered inputs. **Leave fields you can't determine empty** rather than guessing — the user will fill them in.
 
 You can fill these reliably:
 - §2 "This week's primary deliverable was" — pull from last Sunday's section 12.
-- §4 "What got added to `/build-log/decisions.md` this week" — list headings of entries added in the last 7 days. If zero, write "Zero entries this week — flag." (Per the template: zero is a flag.)
+- §4 "What got added to `../build-log/decisions.md` this week" — list headings of entries added in the last 7 days. If zero, write "Zero entries this week — flag." (Per the template: zero is a flag.) If `../build-log/decision-checklist.md` listed expected decisions for this week that weren't logged, name them.
 - §8 "What broke or surprised me" — pull from daily build-log "What broke or surprised me" sections.
 - §10 "Resume-bullet readiness" — list bullets currently marked ready vs. in-progress in the accountability plan. Add a flag if a bullet claimed "ready" doesn't have demonstrable code/data behind it from the week's commits.
 - §14 "Monday's first task" — leave empty unless the user has stated it; this is theirs to write.
@@ -82,4 +87,4 @@ The template is brutal on purpose. Match it: terse, no softening, no "great prog
 
 ## After drafting
 
-Show the draft inline, then write it to `build-log/sunday-YYYY-MM-DD.md`. Tell the user which fields you left blank and which auto-detected signals (if any) fired. Don't commit — let the user edit and commit themselves.
+Show the draft inline, then write it to `../build-log/sunday-YYYY-MM-DD.md`. Tell the user which fields you left blank and which auto-detected signals (if any) fired. Don't commit — let the user edit and commit themselves (and remember the build-log is a separate repo, so a commit there doesn't touch the code repo).

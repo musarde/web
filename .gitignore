@@ -5,7 +5,7 @@ node_modules/
 .env
 .venv/
 *.log
-.DS_Store
+**/.DS_Store
 /coverage
 /build
 
@@ -14,8 +14,5 @@ node_modules/
 .claude/settings.local.json
 .claude/projects/
 
-# Local-only project planning and build log files
-musarde-project.md
-accountability-plan.md
-decision-checklist.md
+# Defense-in-depth: build-log lives in a sibling private repo, not here
 build-log/
