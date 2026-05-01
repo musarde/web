@@ -3,6 +3,7 @@ node_modules/
 .vercel/
 .env*.local
 .env
+.venv/
 *.log
 .DS_Store
 /coverage
@@ -12,3 +13,9 @@ node_modules/
 .claude/worktrees/
 .claude/settings.local.json
 .claude/projects/
+
+# Local-only project planning and build log files
+musarde-project.md
+accountability-plan.md
+decision-checklist.md
+build-log/
