@@ -1,6 +1,6 @@
 ---
 name: build-log-entry
-description: Draft a daily Musarde build-log entry at ../build-log/YYYY-MM-DD.md by reading today's commits and recent file changes, formatted as What I worked on / What worked / What broke or surprised me / Open questions / Tomorrow's first task. Use this skill when the user says "log today," "build log entry," "EOD log," "daily log," "wrap up today," or asks to capture the day's Musarde work. The skill produces a draft the user edits before committing. Do not trigger for retrospectives that span multiple days (use sunday-checkin for the weekly review) or for repos other than Musarde.
+description: Draft a daily Musarde build-log entry at ../build-log/YYYY-MM-DD.md by reading today's commits and recent file changes, formatted as What I worked on / What worked / What broke or surprised me / Decisions made today / Open questions / Tomorrow's first task. Use this skill when the user says "log today," "build log entry," "EOD log," "daily log," "wrap up today," or asks to capture the day's Musarde work. The skill produces a draft the user edits before committing. Do not trigger for retrospectives that span multiple days (use sunday-checkin for the weekly review) or for repos other than Musarde.
 ---
 
 # build-log-entry
@@ -45,7 +45,11 @@ Use this exact template. Match the existing build-log voice if entries already e
 - ...
 
 ## What broke or surprised me
-- [bugs that took longer than they should have, library behavior that surprised you, integrations that didn't go to plan; small surprises count — they feed Sunday §8 and the eventual stress-test material]
+- [bugs that took longer than they should have, library behavior that surprised you, integrations that didn't go to plan; small surprises count — they feed Sunday §5 and the eventual stress-test material]
+- ...
+
+## Decisions made today
+- [architectural calls worth pinning. If a call is meaty enough (compares named alternatives, shapes system architecture), it also belongs in `../build-log/decisions.md` via the decisions-log skill — flag candidates here, write the formal entry separately.]
 - ...
 
 ## Open questions
@@ -60,6 +64,7 @@ Use this exact template. Match the existing build-log voice if entries already e
 
 **Pre-fill from repo state:**
 - "What I worked on" — translate commits and uncommitted diffs into chunks. Don't list raw commit messages; group related commits ("Wired up the Met adapter's transform layer and tests" beats "Add transform.py" + "Fix transform" + "Add fixture"). One bullet per coherent chunk.
+- "Decisions made today" — if commits or daily-log notes suggest a clear architectural call, list it as a candidate. Don't write the full ADR here; the decisions-log skill is for that.
 - Audit note against yesterday's "Tomorrow's first task" — if yesterday said "wire up CLIP embeddings" and today's commits are all about queue retries, surface that as an "Open questions" candidate ("punted on CLIP embeddings — why?").
 
 **Leave blank with a `_[fill in]_` marker:**
@@ -74,7 +79,7 @@ It's tempting to fill everything from commit messages and look helpful. Don't. A
 
 - **No commits today.** Don't write "took the day off" or invent activity. Surface it: "No commits today. Want to log a no-code day (reading, museum visit, planning) or skip the entry?" The build log isn't a streak; missing days are fine.
 - **Lots of commits, all small fixes.** Group them. "Various adapter cleanups" is a fine bullet for 8 small commits on the same area. Don't pad.
-- **The file already exists.** Don't overwrite. Read it, show the user what's there, ask whether they want to append, edit, or replace.
+- **The file already exists.** Likely — morning check-in proactively stubs `YYYY-MM-DD.md` per the file-maintenance protocol in `musarde-project.md`. Read what's there, treat existing pre-fill (yesterday's task, this week's deliverable, calendar items) as scaffolding, and fill in around it. Don't overwrite without showing the user.
 - **It's after midnight but the user means "yesterday's work."** Confirm the date before writing. The filename is the date the work happened, not the wallclock at write time.
 
 ## After drafting
