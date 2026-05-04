@@ -15,13 +15,18 @@ Claude Code can read them via relative paths when run from this directory.
 
 Primary references:
 - `../build-log/musarde-project.md` — master project brief, scope, plan
-- `../build-log/accountability-plan.md` — cadence, check-ins, interview-prep
-  track, resume-bullet readiness table
+- `../build-log/accountability-plan.md` — cadence, Sunday check-ins,
+  resume-bullet readiness table, Week 6 ship-or-pause framework
 - `../build-log/decisions.md` — running architectural decisions log
 - `../build-log/glossary.md` — project-specific terms
 - `../build-log/decision-checklist.md` — week-by-week decisions surfaced
 - `../build-log/sunday-checkin-template.md` — copied each Sunday into
   `../build-log/sunday-YYYY-MM-DD.md`
+
+The Musarde build-log is project-only. Job-search status, mock-interview
+reflections, and HelloInterview / system-design study live in a separate
+Sabbatical Strategy project — don't pull or reference them from build-log
+files.
 
 If `../build-log/` isn't present (e.g. someone cloned just `web/`), these
 references won't resolve. That's expected — the planning material is
@@ -74,7 +79,8 @@ drift other Seattle museums or scraping-based sources back into v1.
 - Daily: `YYYY-MM-DD.md` — what worked, what broke, open questions,
   tomorrow's first task
 - Sunday: copy `sunday-checkin-template.md` to `sunday-YYYY-MM-DD.md`
-- Mock interview: `mock-interview-YYYY-MM-DD.md`
+- No mock-interview files here — they live in `~/vaults/kokochi/Mock Interviews/`,
+  governed by the Sabbatical Strategy project
 
 ## What I want from Claude Code
 - Push back on architecture choices before I commit to them, especially

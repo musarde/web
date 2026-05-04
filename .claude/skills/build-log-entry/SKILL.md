@@ -29,8 +29,6 @@ Run these in parallel.
 3. **Yesterday's build-log entry**, if it exists.
    Read `../build-log/<yesterday>.md` and pull the "Tomorrow's first task" line. That's the audit anchor: did today's work actually start with that task? If not, that's worth flagging — drift is interesting data.
 
-4. **Any open `../build-log/mock-interview-*.md` from today** — if present, that work counts toward the day too.
-
 ## Output format
 
 Use this exact template. Match the existing build-log voice if entries already exist (read one or two recent files); otherwise default to terse first-person, no headers beyond the section heads.
