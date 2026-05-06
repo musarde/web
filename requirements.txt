@@ -1,0 +1,22 @@
+# Musarde Python dependencies (loaders, scripts, tests).
+# Python 3.14 target — see ruff.toml.
+#
+# Rebuild venv from scratch:
+#     python3.14 -m venv .venv
+#     source .venv/bin/activate
+#     pip install -r requirements.txt
+#
+# After upgrading anything, refresh exact pins with:
+#     pip freeze > requirements.txt
+
+# --- Runtime (loaders + scripts) ---
+# psycopg 3.x; [binary] bundles libpq so no system-libpq install needed.
+# `executemany(..., returning=True)` (used in loaders/met/{objects,artists}.py)
+# requires >=3.1.
+psycopg[binary]>=3.2
+python-dotenv>=1.0
+tqdm>=4.66
+
+# --- Dev (tests, lint/format) ---
+pytest>=8.0
+ruff>=0.6

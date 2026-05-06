@@ -28,10 +28,10 @@ import psycopg
 import pytest
 from dotenv import load_dotenv
 
+from loaders.met.csv_util import iter_csv_rows
 from loaders.met.objects import (
     SOURCE,
     LoaderStats,
-    iter_csv_rows,
     map_row_to_object,
     run,
 )
