@@ -1,0 +1,13 @@
+# Ruff config for Musarde Python loaders / scripts.
+# Docs: https://docs.astral.sh/ruff/
+target-version = "py314"
+line-length = 100
+
+[lint]
+# E/W = pycodestyle, F = pyflakes (unused imports, undefined names),
+# I = isort (import sorting), UP = pyupgrade, B = flake8-bugbear,
+# SIM = flake8-simplify.
+select = ["E", "F", "I", "W", "UP", "B", "SIM"]
+
+[format]
+quote-style = "double"

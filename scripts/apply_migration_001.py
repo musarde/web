@@ -20,7 +20,6 @@ from pathlib import Path
 import psycopg
 from dotenv import load_dotenv
 
-
 REPO_ROOT = Path(__file__).resolve().parent.parent
 MIGRATION_FILE = REPO_ROOT / "db" / "migrations" / "001_v1_schema.sql"
 
@@ -48,7 +47,7 @@ def apply_migration(conn: psycopg.Connection) -> None:
 
 
 def verify(conn: psycopg.Connection) -> bool:
-    """Print extension/table/index/constraint inventory; return True iff every expected table is present and pgvector is loaded."""
+    """Print schema inventory; True iff all expected tables present and pgvector loaded."""
     ok = True
     with conn.cursor() as cur:
         # Extension
@@ -127,7 +126,7 @@ def verify(conn: psycopg.Connection) -> bool:
 
 
 def _index_kind(indexdef: str) -> str:
-    """Classify a pg_indexes definition string into a short tag (GIN, HNSW, partial UQ, UNIQUE, btree) for the inventory printout."""
+    """Classify a pg_indexes definition string into a short tag for the inventory printout."""
     if "USING gin" in indexdef:
         return "[GIN]"
     if "USING hnsw" in indexdef:
@@ -140,7 +139,7 @@ def _index_kind(indexdef: str) -> str:
 
 
 def main() -> int:
-    """CLI entry point: parse args, load DATABASE_URL, optionally apply the migration, run verify, and return a process exit code (0 ok, 1 verify failed, 2 missing config)."""
+    """Parse args, load DATABASE_URL, apply/verify schema; exit 0 ok, 1 fail, 2 missing config."""
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--verify",

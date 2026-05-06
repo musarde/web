@@ -24,3 +24,7 @@ __pycache__/
 
 # Defense-in-depth: build-log lives in a sibling private repo, not here
 build-log/
+
+# Raw source dumps (Met CSV, AIC JSON dumps, Getty bulk exports). Large
+# binary-ish files; keep out of git, re-fetch on demand from upstream.
+data/
