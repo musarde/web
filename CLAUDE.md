@@ -42,7 +42,7 @@ deliberately separated from the public code repo.
 
 ## Stack (current as of Week 0)
 - Next.js (App Router), Tailwind, Vercel as PWA
-- Postgres on Supabase or Neon (TBD), pgvector for embeddings
+- Postgres on Neon, pgvector for embeddings
 - Vision: OpenCLIP ViT-L/14 default; SigLIP under consideration (Week 1)
 - Text embeddings: TBD pending Week 1 three-way bake-off
 - LLM: Claude only. Single provider for v1 — GPT-4o was cut in Week 0.

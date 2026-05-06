@@ -28,7 +28,7 @@ Use this exact template. The heading date is today (or the date the decision was
 **Picked:** [The choice, named the same way it appears in code or docs.]
 **Why:** [The tradeoff. What you gave up, why it was worth giving up. 2–4 sentences.]
 **Would revisit if:** [Concrete trigger. "Corpus exceeds X rows," "we add a second writer instance," "latency budget tightens below Y" — not "if requirements change."]
-**Interview talking-point version:** [30-second framing. Should sound natural read aloud. Lead with the constraint, then the choice, then the tradeoff. No filler.]
+**Interview talking-point version:** [30-second framing — ≤ 80 words, ≤ 5 sentences. Should sound natural read aloud. Lead with the constraint, then the choice, then the tradeoff. No filler. Don't redefine the options Considered already lists.]
 ```
 
 ## Quality bar
@@ -43,6 +43,32 @@ A good entry passes these checks:
 ## Voice
 
 The repo's existing planning docs are direct, slightly blunt, no hedging. Match that. Avoid: "we feel that," "it might be worth," "ideally," "in the future." Prefer the active first-person ("I picked X because…") over passive constructions. The reader is the user, six weeks from now, prepping for an interview — write to that person.
+
+## Length and trim
+
+The log skews verbose by default. After drafting, do a trim pass:
+
+- **No throat-clearing before lists.** Cut "Three observations made X indefensible:" → "Three reasons:" (or just the list).
+- **Why introduces new info; it doesn't restate Context.** If the Why paragraph repeats the constraint or the alternatives from earlier sections, cut the restatement.
+- **Picked describes the choice; Why explains it. Don't describe the choice twice.** If a numbered Picked item already explains its own tradeoff, the Why section shouldn't repeat that argument item-by-item.
+- **Talking-point hard cap: 80 words, 5 sentences.** It names the choice and the tradeoff, not the options. Considered already lists them.
+- **One em-dash per sentence, max.** Em-dash chains are a tell that the thought has more than one part — break into two sentences.
+
+Vocabulary to swap:
+
+| Avoid | Prefer |
+|---|---|
+| indefensible | wasn't worth it |
+| post-hoc | after the fact |
+| structurally novel | novel |
+| symmetric failure mode | opposite failure |
+| ecosystem tax | paying for what I won't use |
+| operational layer | name the layer (queue, scheduler, worker tier) |
+| load-bearing | important / critical (use sparingly) |
+| tipping argument | decided it |
+| untenable | breaks / doesn't work |
+| meaningfully X-er than Y | name the magnitude or the comparison directly |
+| rhyme but don't share bodies | look similar but share no code |
 
 ## After drafting
 

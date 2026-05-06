@@ -58,40 +58,65 @@ Plus the obvious: level, message, error if any, `source_object_id` when relevant
 
 ## File layout
 
-Mirror existing adapters once they exist. Until then, the canonical layout is:
+The unit of file decomposition is **(source, table)**, not source. Each source populates many tables — `objects`, `artists`, `images`, `documents`, the document M:N joins, `document_chunks` — and each is its own re-runnable ingest target with its own natural key. Bundling them into a single per-source file makes a multi-thousand-line grab-bag and breaks partial re-runs. Splitting each (source, table) pair into separate `client.py` / `transform.py` / `adapter.py` / `run.py` files multiplies the file count by ~5× without buying anything: those four files are not reusable across sources or across tables, so the split optimizes for intra-file separation-of-concerns at the cost of repo navigability.
+
+Three axes of reuse, three places code lives:
 
 ```
-loaders/<source>/
-├── __init__.py            # exports the adapter entry point
-├── client.py              # source access: HTTP client + auth + rate limiting (REST/LOD), CSV reader (Met), or local-file loader (SAM)
-├── transform.py           # source response/row → objects row + documents rows (pure, no I/O)
-├── adapter.py             # orchestration: fetch → transform → upsert objects → upsert documents
-├── run.py                 # CLI entry point: `python -m loaders.<source>.run [--limit N] [--since DATE]`
-└── tests/
-    ├── fixtures/          # captured API responses or CSV samples for unit tests
-    ├── test_transform.py  # transform is pure — test it in isolation
-    └── test_adapter.py    # adapter end-to-end against fixtures + a test DB
+loaders/
+├── _common/                 # cross-source plumbing — used by every (source, table) loader
+│   ├── upsert.py            # parameterized ON CONFLICT helper (table, conflict-key, columns)
+│   ├── stats.py             # LoaderStats + print_summary
+│   ├── cli.py               # base argparser (--limit, --batch-size, --dry-run)
+│   ├── logging.py           # structured logging with source + batch_id + duration_ms
+│   └── db.py                # load_dotenv + DATABASE_URL + psycopg.connect helper
+├── met/
+│   ├── _csv.py              # per-source helper: BOM-aware reader, field-size limit, row iter
+│   ├── objects.py           # one file per (source, table) ingest target
+│   ├── artists.py
+│   ├── images.py
+│   ├── documents.py
+│   └── ...
+├── aic/
+│   ├── _client.py           # per-source helper: HTTP client + auth + rate limit
+│   ├── objects.py
+│   └── ...
+├── getty/
+│   ├── _sparql.py           # per-source helper: SPARQL endpoint + result iteration
+│   └── objects.py
+└── sam/
+    ├── _catalog.py          # per-source helper: local-file catalog loader
+    └── objects.py
 ```
 
-**Note (2026-05-05):** the multi-file split above is the canonical recommendation, but the Met objects loader was built as a single file (`loaders/met/objects.py`) on Day 2 to avoid premature abstraction. The split decision is deferred until AIC adapter (Day 3+) reveals whether the abstraction is genuinely useful across two adapters or only seemed clean in the abstract. If AIC drives the split, refactor Met at the same time so the pattern is consistent across both.
-
-The transform layer is **pure** (no I/O) so it can be unit-tested without hitting the real API or DB. The adapter layer is the only place that touches network or database. `run.py` is the user-facing CLI — it parses args, sets up logging with a fresh `batch_id`, calls the adapter, and exits with a non-zero code on failure.
+Each `<source>/<table>.py` is shaped like the existing `loaders/met/objects.py`: a pure mapping function (`map_row_to_<table>`), table-specific upsert SQL, a `run()` that drives stream → batch → upsert, and a `main()` CLI entry. Purity of the mapping function is enforced at the function level, not by giving it its own file — the existing `map_row_to_object` is already trivially testable in isolation without a separate `transform.py`. Tests for that file live in `loaders/<source>/tests/test_<table>.py`.
 
 There is no `worker.py`, no `queue.py`, no `dead_jobs` handling. If you find yourself reaching for one, that's the signal to re-read the Week 0 decisions-log entry.
 
+### Shared library extraction policy
+
+Do not pre-build `_common/` or per-source helper files (`_csv.py`, `_client.py`, `_sparql.py`). Promote shared code into them only when the **second user** appears.
+
+- Met objects (Day 2) is the first user of the upsert pattern, `LoaderStats`, the CLI args, and the DB connection helper. It lives entirely inside `loaders/met/objects.py` — a single ~330-line file, not split into 4–5 files.
+- The first AIC loader (Day 3+) will be the second user. That is when `_common/` gets created, with the shape that both Met and AIC genuinely share. Met objects gets refactored at the same time so both adapters use the same plumbing.
+- Same rule for per-source helpers: a `met/_csv.py` is created only when Met gets a *second* table loader (e.g. `artists.py`) that needs the same CSV reader, not while `objects.py` is the only file in the directory.
+
+Extracting from a single example produces speculative abstractions that the second user has to fight. Extracting from two real users produces a helper shaped by actual reuse. This matches the Week 0 workload-vs-resume filter: name a concrete second caller before adding the abstraction.
+
 ## What to scaffold
 
-When asked to add an adapter for a source, produce:
+When asked to add a loader for a (source, table) pair, produce:
 
-1. The directory and files above, with skeletons that have the right imports, function signatures, and `# TODO` markers where source-specific logic goes.
-2. A migration (if needed) — most adapters won't need new columns because `raw_metadata` absorbs source-specific fields. If you do need a new column, justify it in the PR and consider whether `raw_metadata` would have done.
-3. A fixture-loading test in `test_transform.py` that proves the transform produces a valid `objects` row (and at least one `documents` row, if the source carries long-form text) from a real captured response.
-4. An idempotency test in `test_adapter.py` that runs the adapter twice against the same fixture and asserts the second run produces zero new inserts (only updates, ideally no-op updates). Without a queue/retry layer, this test is the safety net.
-5. A short note appended to `../build-log/decisions.md` ONLY if onboarding this source involved a real architectural choice (e.g., "picked Met's bulk CSV over per-record API for the initial ingest because…"). Otherwise don't pad the decisions log.
+1. A single file at `loaders/<source>/<table>.py` shaped like `loaders/met/objects.py`: pure mapping function, table-specific upsert SQL, `run()`, `main()`, `# TODO` markers where source-specific logic goes. Do not pre-create `client.py` / `transform.py` / `adapter.py` / `run.py` — that's the splay the layout section explicitly rejects.
+2. If this is the second user of any helper that already lives inline in another loader (upsert exec, `LoaderStats`, CLI args, DB connection, source-level CSV/HTTP/SPARQL helper), extract it per the shared-library extraction policy. Refactor the first user in the same change so both call sites share the helper.
+3. A migration (if needed) — most loaders won't need new columns because `raw_metadata` absorbs source-specific fields. If you do need a new column, justify it in the PR and consider whether `raw_metadata` would have done.
+4. A fixture-loading test in `loaders/<source>/tests/test_<table>.py` that proves the mapping function produces a valid row from a real captured response (CSV sample, API JSON, SPARQL result, etc.). Fixtures live in `loaders/<source>/tests/fixtures/`.
+5. An idempotency test in the same `test_<table>.py` that runs the loader twice against the same fixture and asserts the second run produces zero new inserts (only updates, ideally no-op updates). Without a queue/retry layer, this test is the safety net.
+6. A short note appended to `../build-log/decisions.md` ONLY if onboarding this loader involved a real architectural choice (e.g., "picked Met's bulk CSV over per-record API for the initial ingest because…"). Otherwise don't pad the decisions log.
 
 ## After scaffolding
 
-Tell the user what's stubbed vs. real, what they need to fill in (almost always: API auth, the field-mapping in `transform.py`, the captured fixture), and which conventions they should re-verify before the first real run. Specifically call out:
+Tell the user what's stubbed vs. real, what they need to fill in (almost always: API auth, the field-mapping inside `map_row_to_<table>`, the captured fixture), and which conventions they should re-verify before the first real run. Specifically call out:
 
 - The idempotency test result — if it doesn't pass on the stub, the adapter is not safe to re-run.
 - Whether the source has any update-cadence assumption that would conflict with the "re-run quarterly or on-demand" model. If a source publishes daily diffs the user will actually want to consume, that's a queue-revisit trigger and worth flagging.

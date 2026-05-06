@@ -85,6 +85,8 @@ When Part 3 applies, the project-side audit is fully fillable from build state a
 
 The template is brutal on purpose. Match it: terse, no softening, no "great progress this week!" framing. If something slipped, say it slipped. If decisions log is empty, that's a flag — don't bury it in encouragement. The user's note in the template says this file is for them, not a performance, and "the discomfort is the point" appears multiple times. Lean into that.
 
+The Length-and-trim rules from the decisions-log skill (one em-dash per sentence, no throat-clearing, vocabulary swaps) apply here too — especially in §4 (what I learned) and §6 (risk pulse), where prose is the easiest place to soften.
+
 ## After drafting
 
 Show the draft inline, then write it to `../build-log/sunday-YYYY-MM-DD.md`. Tell the user which fields you left blank and which auto-detected signals (if any) fired. Don't commit — let the user edit and commit themselves (and remember the build-log is a separate repo, so a commit there doesn't touch the code repo).

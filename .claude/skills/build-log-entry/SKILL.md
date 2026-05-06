@@ -33,6 +33,8 @@ Run these in parallel.
 
 Use this exact template. Match the existing build-log voice if entries already exist (read one or two recent files); otherwise default to terse first-person, no headers beyond the section heads.
 
+The Length-and-trim rules from the decisions-log skill (one em-dash per sentence, no throat-clearing, vocabulary swaps like "indefensible" → "wasn't worth it") apply to bullets here too. Build-log bullets skew short anyway, but if a bullet is running long, trim the same way.
+
 ```
 # YYYY-MM-DD
 
