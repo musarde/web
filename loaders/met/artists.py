@@ -46,21 +46,18 @@ from __future__ import annotations
 
 import argparse
 import hashlib
-import os
 import sys
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
 import psycopg
-from dotenv import load_dotenv
-from psycopg.rows import dict_row
-from psycopg.types.json import Jsonb
 from tqdm import tqdm
 
+from loaders._common.cli import add_common_args
+from loaders._common.db import get_database_url
+from loaders._common.upsert import execute_returning_batch
 from loaders.met.csv_util import coerce_year, iter_csv_rows
-
-REPO_ROOT = Path(__file__).resolve().parent.parent.parent
 
 SOURCE = "met"
 
@@ -170,14 +167,18 @@ class LoaderStats:
     rows_read: int = 0
     rows_no_parent_object: int = 0
     rows_no_artists: int = 0
+    # Per-resolve counters (NOT unique-artist counts — same artist
+    # resolved across N rows increments these N times). On a fresh DB,
+    # `artists_inserted` happens to equal the unique artist count
+    # because each source_artist_id only inserts once; on re-runs it
+    # drops to 0 and `artists_updated` carries the full resolve total.
+    # For unique counts, query `artists` directly.
     artists_inserted: int = 0
     artists_updated: int = 0
-    object_artists_inserted: int = 0
-    object_artists_skipped_dupe: int = 0
-    # Per-resolve counters (NOT unique-artist counts — same artist
-    # resolved across N rows increments N times).
     ulan_key_resolves: int = 0
     synth_key_resolves: int = 0
+    object_artists_inserted: int = 0
+    object_artists_skipped_dupe: int = 0
     parse_errors: list[tuple[int, str]] = field(default_factory=list)
 
 
@@ -196,23 +197,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         type=Path,
         help="Path to MetObjects.csv (e.g. data/raw/MetObjects.csv).",
     )
-    parser.add_argument(
-        "--limit",
-        type=int,
-        default=None,
-        help="Stop after processing N CSV rows (parent objects).",
-    )
-    parser.add_argument(
-        "--batch-size",
-        type=int,
-        default=500,
-        help="Commit every N CSV rows (default: 500).",
-    )
-    parser.add_argument(
-        "--dry-run",
-        action="store_true",
-        help="Parse and tally without writing to the database.",
-    )
+    add_common_args(parser)
     return parser.parse_args(argv)
 
 
@@ -288,7 +273,12 @@ def compute_source_artist_id(parsed: ParsedArtist, stats: LoaderStats) -> str:
 
 
 def build_artist_record(parsed: ParsedArtist, source_artist_id: str) -> dict[str, Any]:
-    """Map a ParsedArtist to the column→value dict for the `artists` table."""
+    """Map a ParsedArtist to the column→value dict for the `artists` table.
+
+    `raw_metadata` is left as a plain dict; the upsert helper wraps it
+    as Jsonb at bind time (see `jsonb_fields` arg to
+    `execute_returning_batch`).
+    """
     return {
         "source": SOURCE,
         "source_artist_id": source_artist_id,
@@ -300,7 +290,7 @@ def build_artist_record(parsed: ParsedArtist, source_artist_id: str) -> dict[str
         "gender": parsed.gender,
         "ulan_uri": parsed.ulan_uri,
         "wikidata_uri": parsed.wikidata_uri,
-        "raw_metadata": Jsonb(parsed.raw_position_fields),
+        "raw_metadata": parsed.raw_position_fields,
         "source_updated_at": None,
     }
 
@@ -329,23 +319,14 @@ def resolve_and_upsert_artists_batch(
         build_artist_record(p, compute_source_artist_id(p, stats))
         for p in parsed_list
     ]
-    result_rows: list[dict[str, Any]] = []
-    with conn.cursor(row_factory=dict_row) as cur:
-        cur.executemany(ARTIST_UPSERT_SQL, records, returning=True)
-        while True:
-            row = cur.fetchone()
-            if row is not None:
-                result_rows.append(row)
-                if row["inserted"]:
-                    stats.artists_inserted += 1
-                else:
-                    stats.artists_updated += 1
-            if not cur.nextset():
-                break
-    assert len(result_rows) == len(parsed_list), (
-        f"executemany returned {len(result_rows)} rows for "
-        f"{len(parsed_list)} input artists"
+    result_rows = execute_returning_batch(
+        conn, ARTIST_UPSERT_SQL, records, jsonb_fields=("raw_metadata",)
     )
+    for row in result_rows:
+        if row["inserted"]:
+            stats.artists_inserted += 1
+        else:
+            stats.artists_updated += 1
     return [row["id"] for row in result_rows]
     # v1.5 dedup hook (one-line change after canonical_artist_id ships):
     #   return [row["canonical_artist_id"] or row["id"] for row in result_rows]
@@ -487,10 +468,13 @@ def print_summary(stats: LoaderStats) -> None:
     print(f"  CSV rows read:              {stats.rows_read:,}")
     print(f"  CSV rows w/ no parent obj:  {stats.rows_no_parent_object:,}")
     print(f"  CSV rows w/ no artists:     {stats.rows_no_artists:,}")
-    print(f"  Artists inserted:           {stats.artists_inserted:,}")
-    print(f"  Artists updated:            {stats.artists_updated:,}")
-    print(f"    ULAN-keyed resolves:      {stats.ulan_key_resolves:,}")
-    print(f"    synth-keyed resolves:     {stats.synth_key_resolves:,}")
+    total_resolves = stats.artists_inserted + stats.artists_updated
+    print(f"  Artist resolves (total):    {total_resolves:,}")
+    print(f"    inserts (first occurrence): {stats.artists_inserted:,}")
+    print(f"    updates (re-resolved):    {stats.artists_updated:,}")
+    print(f"    ULAN-keyed:               {stats.ulan_key_resolves:,}")
+    print(f"    synth-keyed:              {stats.synth_key_resolves:,}")
+    print("    NOTE: per-resolve, not unique. Query `artists` for unique count.")
     print(f"  object_artists inserted:    {stats.object_artists_inserted:,}")
     print(f"  object_artists dupes:       {stats.object_artists_skipped_dupe:,}")
     print(f"  Parse errors:               {len(stats.parse_errors):,}")
@@ -504,8 +488,7 @@ def main(argv: list[str] | None = None) -> int:
     """Entry point: parse args, open DB (unless --dry-run), run, summarize."""
     args = parse_args(argv)
 
-    load_dotenv(REPO_ROOT / ".env")
-    db_url = os.environ.get("DATABASE_URL")
+    db_url = get_database_url()
     if not db_url and not args.dry_run:
         print("ERROR: DATABASE_URL not set in environment or .env.", file=sys.stderr)
         return 2

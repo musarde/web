@@ -15,21 +15,18 @@ Usage:
 from __future__ import annotations
 
 import argparse
-import os
 import sys
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
 import psycopg
-from dotenv import load_dotenv
-from psycopg.rows import dict_row
-from psycopg.types.json import Jsonb
 from tqdm import tqdm
 
+from loaders._common.cli import add_common_args
+from loaders._common.db import get_database_url
+from loaders._common.upsert import count_inserts_updates, execute_returning_batch
 from loaders.met.csv_util import coerce_year, iter_csv_rows
-
-REPO_ROOT = Path(__file__).resolve().parent.parent.parent
 
 SOURCE = "met"
 
@@ -113,23 +110,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         type=Path,
         help="Path to MetObjects.csv (e.g. data/raw/MetObjects.csv).",
     )
-    parser.add_argument(
-        "--limit",
-        type=int,
-        default=None,
-        help="Stop after processing N rows. Omit to process the full file.",
-    )
-    parser.add_argument(
-        "--batch-size",
-        type=int,
-        default=500,
-        help="Rows per upsert batch (default: 500).",
-    )
-    parser.add_argument(
-        "--dry-run",
-        action="store_true",
-        help="Parse and tally without writing to the database.",
-    )
+    add_common_args(parser)
     return parser.parse_args(argv)
 
 
@@ -194,31 +175,9 @@ def upsert_batch(
     """Idempotent ON CONFLICT upsert of one batch. Return (inserted, updated)."""
     if not batch:
         return (0, 0)
-
-    # 1. Wrap raw_metadata as Jsonb in each record (don't mutate the original — copy first)
-    prepared = []
-    for record in batch:
-        rec = dict(record)
-        rec["raw_metadata"] = Jsonb(rec["raw_metadata"])
-        prepared.append(rec)
-
-    # 2. Execute the upsert SQL with executemany + returning=True
-    inserted = 0
-    updated = 0
-    with conn.cursor(row_factory=dict_row) as cur:
-        cur.executemany(UPSERT_SQL, prepared, returning=True)
-        while True:
-            row = cur.fetchone()
-            if row is not None:
-                if row["inserted"]:
-                    inserted += 1
-                else:
-                    updated += 1
-            if not cur.nextset():
-                break
+    rows = execute_returning_batch(conn, UPSERT_SQL, batch, jsonb_fields=("raw_metadata",))
     conn.commit()
-
-    return (inserted, updated)
+    return count_inserts_updates(rows)
 
 
 def run(conn: psycopg.Connection | None, args: argparse.Namespace) -> LoaderStats:
@@ -283,8 +242,7 @@ def main(argv: list[str] | None = None) -> int:
     """Entry point: parse args, open DB (unless --dry-run), run loader, print summary."""
     args = parse_args(argv)
 
-    load_dotenv(REPO_ROOT / ".env")
-    db_url = os.environ.get("DATABASE_URL")
+    db_url = get_database_url()
     if not db_url and not args.dry_run:
         print("ERROR: DATABASE_URL not set in environment or .env.", file=sys.stderr)
         return 2
