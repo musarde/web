@@ -1,0 +1,140 @@
+
+[OPENCLIP] anchor met: 625872 (near_duplicate) Worker Shabti of Nauny
+  1. [✓] sim=0.963  met: 625855 (near_duplicate) Worker Shabti of Nauny
+  2. [✓] sim=0.955  met: 625957 (near_duplicate) Worker Shabti of Nauny
+  3. [✓] sim=0.949  met: 625770 (near_duplicate) Worker Shabti of Nauny
+  4. [✓] sim=0.949  met: 625876 (near_duplicate) Worker Shabti of Nauny
+  5. [✓] sim=0.941  met: 625693 (near_duplicate) Worker Shabti of Nauny
+
+[OPENCLIP] anchor met: 625738 (near_duplicate) Worker Shabti of Nauny
+  1. [✓] sim=0.980  met: 625700 (near_duplicate) Worker Shabti of Nauny
+  2. [✓] sim=0.953  met: 625734 (near_duplicate) Worker Shabti of Nauny
+  3. [✓] sim=0.937  met: 625876 (near_duplicate) Worker Shabti of Nauny
+  4. [✓] sim=0.929  met: 625706 (near_duplicate) Worker Shabti of Nauny
+  5. [✓] sim=0.923  met: 623359 (near_duplicate) Worker Shabti of Henettawy (C), Daughter of Isetemkheb
+
+[OPENCLIP] anchor met: 729127 (fine_grained) Terracotta fragment of a column-krater (bowl for mixing
+  1. [✓] sim=0.876  met: 698910 (fine_grained  ) Terracotta fragment of a kylix (drinking cup)
+  2. [✓] sim=0.868  met: 721500 (fine_grained  ) Terracotta fragment of a kylix (drinking cup)
+  3. [✓] sim=0.863  met: 721658 (fine_grained  ) Terracotta fragment of a stemless kylix (drinking cup)
+  4. [✓] sim=0.863  met: 691763 (fine_grained  ) Terracotta fragment of a kylix (drinking cup)
+  5. [✓] sim=0.862  met: 752810 (fine_grained  ) Terracotta rim fragment of a skyphos (deep drinking cup
+
+[OPENCLIP] anchor met: 709889 (fine_grained) Terracotta rim fragment of a kylix (drinking cup)
+  1. [✓] sim=0.859  met: 721513 (fine_grained  ) Terracotta rim fragment of a kylix (drinking cup)
+  2. [✓] sim=0.847  met: 728844 (fine_grained  ) Terracotta fragment of a column-krater (bowl for mixing
+  3. [✓] sim=0.827  met: 713592 (fine_grained  ) Terracotta fragments of a kylix (drinking cup)
+  4. [✓] sim=0.822  met: 703704 (fine_grained  ) Terracotta rim fragment of a kylix (drinking cup)
+  5. [✓] sim=0.821  met: 698910 (fine_grained  ) Terracotta fragment of a kylix (drinking cup)
+
+[OPENCLIP] anchor met: 699368 (fine_grained) Terracotta fragment of a kylix (drinking cup)
+  1. [✓] sim=0.915  met: 698910 (fine_grained  ) Terracotta fragment of a kylix (drinking cup)
+  2. [✓] sim=0.908  met: 699019 (fine_grained  ) Terracotta fragment of a kylix (drinking cup)
+  3. [✓] sim=0.895  met: 710041 (fine_grained  ) Terracotta fragment of a kylix (drinking cup)
+  4. [✓] sim=0.882  met: 713497 (fine_grained  ) Terracotta rim fragment of a kylix (drinking cup)
+  5. [✓] sim=0.876  met: 737093 (fine_grained  ) Terracotta fragment of a skyphos (deep drinking cup)
+
+[OPENCLIP] anchor met:  32839 (text_heavy) Manuscript Leaf Cutting from a Choir Book with an Illum
+  1. [✓] sim=0.726  met: 462005 (text_heavy    ) Angel with Harp
+  2. [✓] sim=0.724  met: 461447 (text_heavy    ) King David in Prayer in an Initial B
+  3. [✓] sim=0.640  met: 463605 (text_heavy    ) Manuscript Illumination with Singing Monks in an Initia
+  4. [✓] sim=0.637  met: 463543 (text_heavy    ) Manuscript Illumination with All Saints in an Initial V
+  5. [✓] sim=0.627  met: 463542 (text_heavy    ) Manuscript Illumination with the Assumption of the Virg
+
+[OPENCLIP] anchor met: 466720 (text_heavy) Manuscript Leaf with Initial O, from an Antiphonary
+  1. [✓] sim=0.951  met: 466715 (text_heavy    ) Manuscript Leaf with Initial F, from an Antiphonary
+  2. [✓] sim=0.941  met: 466721 (text_heavy    ) Manuscript Leaf with Initial E, from an Antiphonary
+  3. [✓] sim=0.915  met: 466716 (text_heavy    ) Manuscript Leaf, from an Antiphonary
+  4. [✓] sim=0.868  met: 466733 (text_heavy    ) Manuscript Leaf with Initial V, from an Antiphonary
+  5. [✓] sim=0.867  met: 466792 (text_heavy    ) Bifolium with Initial C, from an Antiphonary
+
+[OPENCLIP] anchor met: 360050 (perspective) Frontispiece from "Prima Parte di Architetture, e Prosp
+  1. [✓] sim=0.862  met: 416031 (perspective   ) Plate 7: 'Ancient altar on which sacrifices were perfor
+  2. [✓] sim=0.849  met: 365471 (perspective   ) Ruins of an ancient tomb in front of ruins of an ancien
+  3. [✓] sim=0.811  met: 365472 (perspective   ) Remains of ancient buldings among which stands the sepu
+  4. [✓] sim=0.809  met: 363086 (perspective   ) The so-called Grotto of Egeria (Veduta della fonte e de
+  5. [✓] sim=0.794  met: 361994 (perspective   ) The Skeletons, from "Grotteschi" (Grotesques)
+
+[OPENCLIP] anchor met: 398175 (perspective) View of the arches of the consuls Dolabella and Silanus
+  1. [✓] sim=0.800  met: 363086 (perspective   ) The so-called Grotto of Egeria (Veduta della fonte e de
+  2. [✓] sim=0.796  met: 362909 (perspective   ) Veduta degli avanzi del Foro di Nerva, l'arcade et la m
+  3. [✓] sim=0.794  met: 406668 (perspective   ) Another view of the remains of the Pronaos of the Templ
+  4. [✓] sim=0.749  met: 400194 (perspective   ) View of the so-called Temple of Concord with the Temple
+  5. [✓] sim=0.748  met: 365472 (perspective   ) Remains of ancient buldings among which stands the sepu
+
+[OPENCLIP] anchor met: 189130 (realistic) Tazza
+  1. [✓] sim=0.675  met: 207669 (realistic     ) Tankard engraved with scenes of the Great Plague and th
+  2. [✓] sim=0.644  met: 323168 (realistic     ) Bowl
+  3. [✓] sim=0.588  met: 193379 (realistic     ) Watch
+  4. [✓] sim=0.561  met: 193564 (realistic     ) Adoration of the Magi
+  5. [ ] sim=0.556  met: 406320 (perspective   ) Large marble vase decorated with a relief of the sacrif
+
+[SIGLIP] anchor met: 625872 (near_duplicate) Worker Shabti of Nauny
+  1. [✓] sim=0.972  met: 625876 (near_duplicate) Worker Shabti of Nauny
+  2. [✓] sim=0.964  met: 625770 (near_duplicate) Worker Shabti of Nauny
+  3. [✓] sim=0.964  met: 625775 (near_duplicate) Worker Shabti of Nauny
+  4. [✓] sim=0.962  met: 625855 (near_duplicate) Worker Shabti of Nauny
+  5. [✓] sim=0.960  met: 625957 (near_duplicate) Worker Shabti of Nauny
+
+[SIGLIP] anchor met: 625738 (near_duplicate) Worker Shabti of Nauny
+  1. [✓] sim=0.982  met: 625700 (near_duplicate) Worker Shabti of Nauny
+  2. [✓] sim=0.972  met: 625734 (near_duplicate) Worker Shabti of Nauny
+  3. [✓] sim=0.968  met: 625706 (near_duplicate) Worker Shabti of Nauny
+  4. [✓] sim=0.961  met: 625783 (near_duplicate) Worker Shabti of Nauny
+  5. [✓] sim=0.960  met: 625770 (near_duplicate) Worker Shabti of Nauny
+
+[SIGLIP] anchor met: 729127 (fine_grained) Terracotta fragment of a column-krater (bowl for mixing
+  1. [✓] sim=0.867  met: 752810 (fine_grained  ) Terracotta rim fragment of a skyphos (deep drinking cup
+  2. [✓] sim=0.852  met: 698910 (fine_grained  ) Terracotta fragment of a kylix (drinking cup)
+  3. [✓] sim=0.850  met: 745259 (fine_grained  ) Terracotta fragment of a neck-amphora (jar)
+  4. [✓] sim=0.848  met: 721658 (fine_grained  ) Terracotta fragment of a stemless kylix (drinking cup)
+  5. [✓] sim=0.845  met: 737093 (fine_grained  ) Terracotta fragment of a skyphos (deep drinking cup)
+
+[SIGLIP] anchor met: 709889 (fine_grained) Terracotta rim fragment of a kylix (drinking cup)
+  1. [✓] sim=0.888  met: 698910 (fine_grained  ) Terracotta fragment of a kylix (drinking cup)
+  2. [✓] sim=0.882  met: 745124 (fine_grained  ) Terracotta fragments of amphorae (jars)
+  3. [✓] sim=0.861  met: 699019 (fine_grained  ) Terracotta fragment of a kylix (drinking cup)
+  4. [✓] sim=0.860  met: 718910 (fine_grained  ) Terracotta fragment of a kylix (drinking cup)
+  5. [✓] sim=0.860  met: 772575 (fine_grained  ) Terracotta fragment of a pyxis (box) 
+
+[SIGLIP] anchor met: 699368 (fine_grained) Terracotta fragment of a kylix (drinking cup)
+  1. [✓] sim=0.907  met: 698910 (fine_grained  ) Terracotta fragment of a kylix (drinking cup)
+  2. [✓] sim=0.877  met: 699019 (fine_grained  ) Terracotta fragment of a kylix (drinking cup)
+  3. [✓] sim=0.877  met: 718910 (fine_grained  ) Terracotta fragment of a kylix (drinking cup)
+  4. [✓] sim=0.875  met: 737093 (fine_grained  ) Terracotta fragment of a skyphos (deep drinking cup)
+  5. [✓] sim=0.872  met: 710041 (fine_grained  ) Terracotta fragment of a kylix (drinking cup)
+
+[SIGLIP] anchor met:  32839 (text_heavy) Manuscript Leaf Cutting from a Choir Book with an Illum
+  1. [✓] sim=0.815  met: 461447 (text_heavy    ) King David in Prayer in an Initial B
+  2. [✓] sim=0.805  met: 462005 (text_heavy    ) Angel with Harp
+  3. [✓] sim=0.790  met: 467515 (text_heavy    ) Manuscript Leaf with Coat of Arms, from a Book of Hours
+  4. [✓] sim=0.776  met: 478665 (text_heavy    ) Four Gospels in Armenian
+  5. [✓] sim=0.761  met: 468978 (text_heavy    ) Bifolium from a Gradual
+
+[SIGLIP] anchor met: 466720 (text_heavy) Manuscript Leaf with Initial O, from an Antiphonary
+  1. [✓] sim=0.966  met: 466715 (text_heavy    ) Manuscript Leaf with Initial F, from an Antiphonary
+  2. [✓] sim=0.947  met: 466721 (text_heavy    ) Manuscript Leaf with Initial E, from an Antiphonary
+  3. [✓] sim=0.935  met: 466716 (text_heavy    ) Manuscript Leaf, from an Antiphonary
+  4. [✓] sim=0.928  met: 466733 (text_heavy    ) Manuscript Leaf with Initial V, from an Antiphonary
+  5. [✓] sim=0.921  met: 466792 (text_heavy    ) Bifolium with Initial C, from an Antiphonary
+
+[SIGLIP] anchor met: 360050 (perspective) Frontispiece from "Prima Parte di Architetture, e Prosp
+  1. [✓] sim=0.865  met: 365472 (perspective   ) Remains of ancient buldings among which stands the sepu
+  2. [✓] sim=0.841  met: 766373 (perspective   ) Tomb of Julius Caesar
+  3. [✓] sim=0.839  met: 361994 (perspective   ) The Skeletons, from "Grotteschi" (Grotesques)
+  4. [✓] sim=0.838  met: 416031 (perspective   ) Plate 7: 'Ancient altar on which sacrifices were perfor
+  5. [✓] sim=0.836  met: 365471 (perspective   ) Ruins of an ancient tomb in front of ruins of an ancien
+
+[SIGLIP] anchor met: 398175 (perspective) View of the arches of the consuls Dolabella and Silanus
+  1. [✓] sim=0.804  met: 406668 (perspective   ) Another view of the remains of the Pronaos of the Templ
+  2. [✓] sim=0.788  met: 400194 (perspective   ) View of the so-called Temple of Concord with the Temple
+  3. [✓] sim=0.777  met: 365472 (perspective   ) Remains of ancient buldings among which stands the sepu
+  4. [✓] sim=0.773  met: 363086 (perspective   ) The so-called Grotto of Egeria (Veduta della fonte e de
+  5. [✓] sim=0.759  met: 360050 (perspective   ) Frontispiece from "Prima Parte di Architetture, e Prosp
+
+[SIGLIP] anchor met: 189130 (realistic) Tazza
+  1. [✓] sim=0.714  met: 323168 (realistic     ) Bowl
+  2. [✓] sim=0.677  met: 207669 (realistic     ) Tankard engraved with scenes of the Great Plague and th
+  3. [ ] sim=0.628  met: 406320 (perspective   ) Large marble vase decorated with a relief of the sacrif
+  4. [✓] sim=0.625  met: 193379 (realistic     ) Watch
+  5. [ ] sim=0.624  met: 245564 (fine_grained  ) Terracotta Hadra hydria (water jar)

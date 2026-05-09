@@ -28,3 +28,8 @@ build-log/
 # Raw source dumps (Met CSV, AIC JSON dumps, Getty bulk exports). Large
 # binary-ish files; keep out of git, re-fetch on demand from upstream.
 data/
+
+# Eval-harness regenerable artifacts (fetched images, computed embeddings).
+# Re-derive with the harness's fetch_images.py + embed.py.
+eval/**/images/
+eval/**/*.npz
