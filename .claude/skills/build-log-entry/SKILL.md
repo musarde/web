@@ -1,13 +1,13 @@
 ---
 name: build-log-entry
-description: Draft a daily Musarde build-log entry at ../build-log/YYYY-MM-DD.md by reading today's commits and recent file changes, formatted as What I worked on / What worked / What broke or surprised me / Decisions made today / Open questions / Tomorrow's first task. Use this skill when the user says "log today," "build log entry," "EOD log," "daily log," "wrap up today," or asks to capture the day's Musarde work. The skill produces a draft the user edits before committing. Do not trigger for retrospectives that span multiple days (use sunday-checkin for the weekly review) or for repos other than Musarde.
+description: Draft a daily Musarde build-log entry at ../build-log/daily/YYYY-MM-DD.md by reading today's commits and recent file changes, formatted as What I worked on / What worked / What broke or surprised me / Decisions made today / Open questions / Tomorrow's first task. Use this skill when the user says "log today," "build log entry," "EOD log," "daily log," "wrap up today," or asks to capture the day's Musarde work. The skill produces a draft the user edits before committing. Do not trigger for retrospectives that span multiple days (use sunday-checkin for the weekly review) or for repos other than Musarde.
 ---
 
 # build-log-entry
 
-Draft today's build-log entry at `../build-log/YYYY-MM-DD.md`. The goal is to lower friction — the user is tired at end of day and the entry needs to take 5 minutes, not 20. Pre-fill what you can read from the repo, leave judgment calls blank.
+Draft today's build-log entry at `../build-log/daily/YYYY-MM-DD.md`. The goal is to lower friction — the user is tired at end of day and the entry needs to take 5 minutes, not 20. Pre-fill what you can read from the repo, leave judgment calls blank.
 
-Note: the build-log lives in a sibling private repo at `../build-log/`, not in this code repo. Run git commands against that repo (e.g., `git -C ../build-log log ...`) when reading prior entries; run code-repo git commands from the working directory as usual.
+Note: the build-log lives in a sibling private repo at `../build-log/`, not in this code repo. Daily entries live under `../build-log/daily/`; Sunday check-ins live under `../build-log/weekly/`. Run git commands against that repo (e.g., `git -C ../build-log log ...`) when reading prior entries; run code-repo git commands from the working directory as usual.
 
 ## Inputs to gather
 
@@ -27,7 +27,7 @@ Run these in parallel.
    Uncommitted work counts toward "what I worked on" even if not pushed.
 
 3. **Yesterday's build-log entry**, if it exists.
-   Read `../build-log/<yesterday>.md` and pull the "Tomorrow's first task" line. That's the audit anchor: did today's work actually start with that task? If not, that's worth flagging — drift is interesting data.
+   Read `../build-log/daily/<yesterday>.md` and pull the "Tomorrow's first task" line. That's the audit anchor: did today's work actually start with that task? If not, that's worth flagging — drift is interesting data.
 
 ## Output format
 

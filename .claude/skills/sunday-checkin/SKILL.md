@@ -1,6 +1,6 @@
 ---
 name: sunday-checkin
-description: Populate the weekly Sunday check-in entry for the Musarde build log by aggregating the week's commits, new entries in ../build-log/decisions.md, daily build-log files, and current resume-bullet status against the sunday-checkin-template structure. Use this skill when the user says "sunday checkin," "weekly review," "fill in the sunday checkin," "weekly buildlog," or asks for a status summary of the past week's Musarde work. The output is saved to ../build-log/sunday-YYYY-MM-DD.md and covers what shipped, what slipped, decisions logged, architecture defensibility, resume-bullet readiness, project risk pulse, and next week's first task. Job-search status, mock-interview reflections, and HelloInterview / system-design study live in the Sabbatical Strategy project — this skill does not pull or fill them in. Trigger only for Musarde weekly-review requests — not for general status updates or other repos.
+description: Populate the weekly Sunday check-in entry for the Musarde build log by aggregating the week's commits, new entries in ../build-log/decisions.md, daily build-log files in ../build-log/daily/, and current resume-bullet status against the sunday-checkin-template structure. Use this skill when the user says "sunday checkin," "weekly review," "fill in the sunday checkin," "weekly buildlog," or asks for a status summary of the past week's Musarde work. The output is saved to ../build-log/weekly/sunday-YYYY-MM-DD.md and covers what shipped, what slipped, decisions logged, architecture defensibility, resume-bullet readiness, project risk pulse, and next week's first task. Job-search status, mock-interview reflections, and HelloInterview / system-design study live in the Sabbatical Strategy project — this skill does not pull or fill them in. Trigger only for Musarde weekly-review requests — not for general status updates or other repos.
 ---
 
 # sunday-checkin
@@ -13,7 +13,7 @@ This check-in covers Musarde build state only. Do not pull or fill job-search st
 
 Run these in parallel before writing anything. Don't ask the user to feed you the data — pull it yourself.
 
-The build-log is a sibling private repo at `../build-log/`, not in the code repo. Use `git -C ../build-log <cmd>` for git operations against it; use plain `git <cmd>` from the working directory for code-repo commits.
+The build-log is a sibling private repo at `../build-log/`, not in the code repo. Daily entries live under `../build-log/daily/`; Sunday check-ins (including this skill's output and `sunday-checkin-template.md`) live under `../build-log/weekly/`. Use `git -C ../build-log <cmd>` for git operations against it; use plain `git <cmd>` from the working directory for code-repo commits.
 
 1. **The week's commits in the code repo.**
    ```
@@ -28,10 +28,10 @@ The build-log is a sibling private repo at `../build-log/`, not in the code repo
    Extract the headings of any entries added in the last 7 days. Zero entries this week is itself a signal — call it out explicitly. Cross-check against `../build-log/decision-checklist.md`: if the checklist anticipated decisions for this week and none were logged, flag the gap.
 
 3. **Daily build-log files from the week.**
-   List and read `../build-log/YYYY-MM-DD.md` for each day in the past 7 days that exists. Missing days are also signal.
+   List and read `../build-log/daily/YYYY-MM-DD.md` for each day in the past 7 days that exists. Missing days are also signal.
 
 4. **Last week's "Next week's primary deliverable" and "Monday's first task."**
-   Find the previous `../build-log/sunday-*.md` file. Read sections 9 and 10. The current week's check-in audits against last week's commitments — without them you're writing in a vacuum.
+   Find the previous `../build-log/weekly/sunday-*.md` file. Read sections 9 and 10. The current week's check-in audits against last week's commitments — without them you're writing in a vacuum.
 
 5. **Current resume-bullet status.**
    Read `../build-log/accountability-plan.md` §"Resume-bullet readiness." Note which v0.6 bullets are claimed-ready vs. in-progress. Cross-reference against what the commits and daily logs actually demonstrate.
@@ -41,7 +41,7 @@ The build-log is a sibling private repo at `../build-log/`, not in the code repo
 
 ## Output
 
-Copy `../build-log/sunday-checkin-template.md` to `../build-log/sunday-YYYY-MM-DD.md` (today's date), then fill in what you can from the gathered inputs. **Leave fields you can't determine empty** rather than guessing — the user will fill them in.
+Copy `../build-log/weekly/sunday-checkin-template.md` to `../build-log/weekly/sunday-YYYY-MM-DD.md` (today's date), then fill in what you can from the gathered inputs. **Leave fields you can't determine empty** rather than guessing — the user will fill them in.
 
 The template has 10 numbered sections in Part 1 (project deliverable check, architecture defensibility, decisions log, what I learned, what broke or surprised me, risk pulse, resume-bullet readiness, decision queue, next week's primary deliverable, Monday's first task), plus Part 2 failure-mode signals and Part 3 (Week 6 only).
 
@@ -89,4 +89,4 @@ The Length-and-trim rules from the decisions-log skill (one em-dash per sentence
 
 ## After drafting
 
-Show the draft inline, then write it to `../build-log/sunday-YYYY-MM-DD.md`. Tell the user which fields you left blank and which auto-detected signals (if any) fired. Don't commit — let the user edit and commit themselves (and remember the build-log is a separate repo, so a commit there doesn't touch the code repo).
+Show the draft inline, then write it to `../build-log/weekly/sunday-YYYY-MM-DD.md`. Tell the user which fields you left blank and which auto-detected signals (if any) fired. Don't commit — let the user edit and commit themselves (and remember the build-log is a separate repo, so a commit there doesn't touch the code repo).

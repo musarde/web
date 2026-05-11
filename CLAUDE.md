@@ -20,8 +20,8 @@ Primary references:
 - `../build-log/decisions.md` — running architectural decisions log
 - `../build-log/glossary.md` — project-specific terms
 - `../build-log/decision-checklist.md` — week-by-week decisions surfaced
-- `../build-log/sunday-checkin-template.md` — copied each Sunday into
-  `../build-log/sunday-YYYY-MM-DD.md`
+- `../build-log/weekly/sunday-checkin-template.md` — copied each Sunday into
+  `../build-log/weekly/sunday-YYYY-MM-DD.md`
 
 The Musarde build-log is project-only. Job-search status, mock-interview
 reflections, and HelloInterview / system-design study live in a separate
@@ -76,9 +76,14 @@ drift other Seattle museums or scraping-based sources back into v1.
   picked, why, would-revisit-if, interview talking-point version).
 
 ## Build-log file conventions (in `../build-log/`)
-- Daily: `YYYY-MM-DD.md` — what worked, what broke, open questions,
+- Daily build logs live in `../build-log/daily/`:
+  `daily/YYYY-MM-DD.md` — what worked, what broke, open questions,
   tomorrow's first task
-- Sunday: copy `sunday-checkin-template.md` to `sunday-YYYY-MM-DD.md`
+- Sunday check-ins live in `../build-log/weekly/`:
+  copy `weekly/sunday-checkin-template.md` to `weekly/sunday-YYYY-MM-DD.md`
+- In-place planning files (`musarde-project.md`, `accountability-plan.md`,
+  `decisions.md`, `decision-checklist.md`, `glossary.md`) stay at the
+  `../build-log/` root
 - No mock-interview files here — they live in `~/vaults/kokochi/Mock Interviews/`,
   governed by the Sabbatical Strategy project
 
