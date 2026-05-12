@@ -44,7 +44,9 @@ deliberately separated from the public code repo.
 - Next.js (App Router), Tailwind, Vercel as PWA
 - Postgres on Neon, pgvector for embeddings
 - Vision: OpenCLIP ViT-L/14 default; SigLIP under consideration (Week 1)
-- Text embeddings: TBD pending Week 1 three-way bake-off
+- Text embeddings: TBD pending Week 3 three-way bake-off (Thu May 21
+  hard deadline; reslotted from Week 1 — see decisions.md 2026-05-11
+  calendar contract entry)
 - LLM: Claude only. Single provider for v1 — GPT-4o was cut in Week 0.
 - Agent: raw Claude function-calling API, not a framework
 - Loader: on-demand re-runnable Python script. No queue, no cron.
